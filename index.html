@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateurs de performance — Le CFO masqué × Solutions Pellerin</title>
+<style>
+  :root {
+    --navy: #0f1e3d;
+    --navy-2: #1a2d52;
+    --navy-3: #243a66;
+    --teal: #1fb8a6;
+    --teal-dark: #189a8b;
+    --gold: #f5b945;
+    --gold-dark: #e0a32f;
+    --excel: #2bb673;
+    --excel-dark: #21955c;
+    --red-soft: #ff6b6b;
+    --bg: #f6f8fc;
+    --card: #ffffff;
+    --text: #1a2640;
+    --muted: #6b7895;
+    --line: #e3e8f2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Top brand bar */
+  .brandbar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--line);
+    padding: 18px 24px;
+  }
+  .brandbar-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .brandbar img {
+    display: block;
+    max-height: 56px;
+    width: auto;
+  }
+  .brandbar .partner-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    font-weight: 600;
+    text-align: center;
+    flex: 1;
+  }
+  .brandbar .partner-label span {
+    display: block;
+    color: var(--navy);
+    font-size: 11px;
+    margin-top: 2px;
+    letter-spacing: 0.8px;
+  }
+  @media (max-width: 700px) {
+    .brandbar-inner { justify-content: center; }
+    .brandbar .partner-label { flex: 0 0 100%; order: -1; margin-bottom: 4px; }
+    .brandbar img { max-height: 44px; }
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+    color: #fff;
+    padding: 64px 24px 100px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -100px;
+    width: 450px; height: 450px;
+    background: radial-gradient(circle, rgba(31,184,166,0.16) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(245,185,69,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-content {
+    max-width: 880px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(245,185,69,0.18);
+    color: var(--gold);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    border: 1px solid rgba(245,185,69,0.35);
+  }
+
+  h1 {
+    font-size: clamp(30px, 4.5vw, 48px);
+    line-height: 1.1;
+    font-weight: 800;
+    margin-bottom: 18px;
+    letter-spacing: -0.5px;
+  }
+  h1 .accent { color: var(--gold); }
+
+  .hero p.lead {
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* Cards section */
+  .main {
+    max-width: 1180px;
+    margin: -60px auto 0;
+    padding: 0 24px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  @media (max-width: 800px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 36px 32px 32px;
+    box-shadow: 0 14px 44px rgba(15,30,61,0.10);
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+  }
+  .card.excel::before { background: linear-gradient(90deg, var(--excel), var(--excel-dark)); }
+  .card.powerbi::before { background: linear-gradient(90deg, var(--gold), var(--gold-dark)); }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 56px rgba(15,30,61,0.14);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .card-logo {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8faff;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .card-logo img {
+    max-width: 36px;
+    max-height: 36px;
+    display: block;
+  }
+
+  .card-title-block .tool {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .card.excel .card-title-block .tool { color: var(--excel-dark); }
+  .card.powerbi .card-title-block .tool { color: var(--gold-dark); }
+
+  .card-title-block h2 {
+    font-size: 22px;
+    color: var(--navy);
+    margin-top: 2px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+
+  .card .pitch {
+    color: var(--text);
+    font-size: 15px;
+    margin-bottom: 18px;
+    line-height: 1.55;
+  }
+
+  .card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 22px;
+    display: grid;
+    gap: 8px;
+  }
+  .card ul li {
+    font-size: 14px;
+    color: var(--muted);
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .card ul li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 9px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+  .card.excel ul li::before { background: var(--excel); }
+  .card.powerbi ul li::before { background: var(--gold-dark); }
+
+  .card-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-top: auto;
+  }
+  .card.excel .card-cta {
+    background: linear-gradient(135deg, var(--excel) 0%, var(--excel-dark) 100%);
+    color: #fff;
+    box-shadow: 0 8px 22px rgba(43,182,115,0.32);
+  }
+  .card.excel .card-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(43,182,115,0.45);
+  }
+  .card.powerbi .card-cta {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    color: var(--navy);
+    box-shadow: 0 8px 22px rgba(245,185,69,0.36);
+  }
+  .card.powerbi .card-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(245,185,69,0.5);
+  }
+  .card-cta .arrow {
+    margin-left: 8px;
+    transition: transform 0.15s;
+  }
+  .card-cta:hover .arrow { transform: translateX(4px); }
+
+  /* Promo strip */
+  .promo {
+    margin-top: 50px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+    border-radius: 18px;
+    padding: 38px 32px;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 14px 44px rgba(15,30,61,0.18);
+  }
+  .promo h3 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+  .promo p {
+    color: rgba(255,255,255,0.78);
+    max-width: 640px;
+    margin: 0 auto 22px;
+    font-size: 16px;
+  }
+  .promo a.cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+    color: #fff;
+    text-decoration: none;
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 8px 24px rgba(31,184,166,0.35);
+  }
+  .promo a.cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(31,184,166,0.5);
+  }
+
+  /* Footer */
+  .footer-note {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .footer-note strong { color: var(--navy); }
+  .footer-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-logos img {
+    max-height: 44px;
+    width: auto;
+    opacity: 0.9;
+  }
+</style>
+</head>
+<body>
+
+<div class="brandbar">
+  <div class="brandbar-inner">
+    <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+    <div class="partner-label">
+      Présenté par
+      <span>en partenariat</span>
+    </div>
+    <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-content">
+    <span class="badge">Calculateurs de performance</span>
+    <h1>Combien votre entreprise <span class="accent">perd-elle vraiment</span> à cause de ses outils mal utilisés ?</h1>
+    <p class="lead">
+      Deux calculateurs gratuits pour mettre un chiffre concret sur le coût caché d'une mauvaise utilisation d'Excel
+      et sur les décisions prises sans données fiables. Ajustez les paramètres à votre réalité — les résultats parlent d'eux-mêmes.
+    </p>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="cards">
+
+    <a class="card excel" href="excel.html" style="text-decoration:none; color:inherit;">
+      <div class="card-header">
+        <div class="card-logo">
+          <img src="excel-logo.png" alt="Excel">
+        </div>
+        <div class="card-title-block">
+          <div class="tool">Microsoft Excel</div>
+          <h2>Le coût d'une mauvaise utilisation d'Excel</h2>
+        </div>
+      </div>
+
+      <p class="pitch">Tâches manuelles, formules fragiles, fichiers que personne d'autre ne peut ouvrir quand l'employé clé est en vacances. Mesurez ce que ça coûte chaque année.</p>
+
+      <ul>
+        <li>Récurrence de la tâche × heures investies × salaire chargé</li>
+        <li>Manipulations évitables avec Power Query et l'automatisation</li>
+        <li>Coût des erreurs détectées et de la vulnérabilité lors des congés</li>
+        <li>Projection sur 3 ans pour visualiser le manque à gagner</li>
+      </ul>
+
+      <span class="card-cta">Calculer mon coût Excel <span class="arrow">→</span></span>
+    </a>
+
+    <a class="card powerbi" href="power-bi.html" style="text-decoration:none; color:inherit;">
+      <div class="card-header">
+        <div class="card-logo">
+          <img src="power-bi-logo.png" alt="Power BI">
+        </div>
+        <div class="card-title-block">
+          <div class="tool">Microsoft Power BI</div>
+          <h2>Le coût des décisions sans données</h2>
+        </div>
+      </div>
+
+      <p class="pitch">Décisions prises au jugé, KPI obsolètes, opportunités vues trop tard. Combien votre entreprise économiserait-elle avec les bons indicateurs à portée de main ?</p>
+
+      <ul>
+        <li>Décisions sub-optimales prises faute de tableau de bord à jour</li>
+        <li>Temps perdu par l'équipe à compiler et chercher des données</li>
+        <li>Anomalies et opportunités non exploitées (multiplicateur de latence)</li>
+        <li>Économies potentielles avec un suivi temps réel des KPI</li>
+      </ul>
+
+      <span class="card-cta">Calculer mon coût Power BI <span class="arrow">→</span></span>
+    </a>
+
+  </div>
+
+  <section class="promo">
+    <h3>Maîtrisez vos outils, transformez vos résultats</h3>
+    <p>Les pertes mises en lumière par ces calculateurs ne sont pas une fatalité. Une formation Excel ou Power BI bien choisie se rentabilise souvent dès le premier trimestre.</p>
+    <a class="cta" href="https://lecfomasque.com/ref/107/" target="_blank" rel="noopener">Voir les formations Le CFO masqué →</a>
+  </section>
+
+  <p class="footer-note">
+    <strong>Le CFO masqué</strong> — Formations Excel et Power BI pour analystes, contrôleurs de gestion et CPA.<br>
+    Plus de 26 000 apprenants formés. Certifications Qualiopi (France) et SOFEDUC (Québec).
+    <div class="footer-logos">
+      <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+      <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+    </div>
+  </p>
+
+</main>
+
+</body>
+</html>

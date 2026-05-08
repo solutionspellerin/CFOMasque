@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Combien vous coûtent les décisions sans données ? | Le CFO masqué</title>
+<style>
+  :root {
+    --navy: #0f1e3d;
+    --navy-2: #1a2d52;
+    --navy-3: #243a66;
+    --teal: #1fb8a6;
+    --teal-dark: #189a8b;
+    --gold: #f5b945;
+    --gold-dark: #e0a32f;
+    --red: #e94e4e;
+    --red-soft: #ff6b6b;
+    --bg: #f6f8fc;
+    --card: #ffffff;
+    --text: #1a2640;
+    --muted: #6b7895;
+    --line: #e3e8f2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Top brand bar */
+  .brandbar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--line);
+    padding: 18px 24px;
+  }
+  .brandbar-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .brandbar img {
+    display: block;
+    max-height: 56px;
+    width: auto;
+  }
+  .brandbar .partner-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    font-weight: 600;
+    text-align: center;
+    flex: 1;
+  }
+  .brandbar .partner-label span {
+    display: block;
+    color: var(--navy);
+    font-size: 11px;
+    margin-top: 2px;
+    letter-spacing: 0.8px;
+  }
+  @media (max-width: 700px) {
+    .brandbar-inner { justify-content: center; }
+    .brandbar .partner-label { flex: 0 0 100%; order: -1; margin-bottom: 4px; }
+    .brandbar img { max-height: 44px; }
+  }
+
+  /* Footer logo strip */
+  .footer-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-logos img {
+    max-height: 44px;
+    width: auto;
+    opacity: 0.9;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+    color: #fff;
+    padding: 56px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(245,185,69,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(31,184,166,0.10) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(245,185,69,0.18);
+    color: var(--gold);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(245,185,69,0.4);
+  }
+
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .tool-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: rgba(255,255,255,0.97);
+    padding: 6px 16px 6px 8px;
+    border-radius: 100px;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  }
+  .tool-chip img {
+    height: 24px;
+    width: auto;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  h1 .accent { color: var(--gold); }
+  h1 .strike { color: var(--red-soft); }
+
+  .hero p.lead {
+    font-size: 18px;
+    color: rgba(255,255,255,0.82);
+    max-width: 720px;
+  }
+
+  .main {
+    max-width: 1180px;
+    margin: -50px auto 0;
+    padding: 0 24px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 12px 40px rgba(15,30,61,0.08);
+    border: 1px solid var(--line);
+  }
+
+  .card h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+    color: var(--navy);
+    font-weight: 700;
+  }
+
+  .card .sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .field { margin-bottom: 22px; }
+
+  .field-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .field label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .field .value-pill {
+    background: var(--navy);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .field .hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  input[type="number"], select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    font-size: 15px;
+    color: var(--text);
+    background: #fff;
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(245,185,69,0.18);
+  }
+
+  input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: var(--line);
+    border-radius: 100px;
+    outline: none;
+    margin-top: 4px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: pointer;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(245,185,69,0.45);
+    transition: transform 0.1s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: pointer;
+    border: 3px solid #fff;
+  }
+
+  .demo-banner {
+    background: linear-gradient(135deg, rgba(245,185,69,0.14), rgba(245,185,69,0.04));
+    border: 1px solid rgba(245,185,69,0.35);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .demo-banner .icon {
+    background: var(--gold);
+    color: #fff;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .demo-banner .text { font-size: 13px; color: var(--text); }
+  .demo-banner .text strong { color: var(--navy); }
+
+  .section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--gold-dark);
+    font-weight: 700;
+    margin: 28px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--line);
+  }
+  .section-title:first-of-type { margin-top: 0; }
+
+  /* RESULTS */
+  .results-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff;
+    border: none;
+    position: sticky;
+    top: 20px;
+    align-self: start;
+  }
+
+  .results-card h2 { color: #fff; }
+  .results-card .sub { color: rgba(255,255,255,0.65); }
+
+  .total-display {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  .total-display .label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .total-display .amount {
+    font-size: clamp(36px, 6vw, 54px);
+    font-weight: 800;
+    color: var(--red-soft);
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .total-display .period {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  .breakdown {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .breakdown-item.warn { border-left-color: var(--teal); }
+  .breakdown-item.danger { border-left-color: var(--red); }
+
+  .breakdown-item .name {
+    font-size: 14px;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .breakdown-item .amt {
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .horizon {
+    background: rgba(233,78,78,0.10);
+    border: 1px solid rgba(233,78,78,0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .horizon .label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+
+  .horizon .amount {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--red-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cta {
+    display: block;
+    text-align: center;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    color: var(--navy);
+    text-decoration: none;
+    padding: 18px 24px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.3px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 8px 24px rgba(245,185,69,0.35);
+    margin-top: 8px;
+  }
+
+  .cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(245,185,69,0.5);
+  }
+
+  .cta .arrow {
+    display: inline-block;
+    margin-left: 6px;
+    transition: transform 0.15s;
+  }
+  .cta:hover .arrow { transform: translateX(4px); }
+
+  .cta-sub {
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 12px;
+  }
+
+  /* Insight section */
+  .insights { margin-top: 60px; }
+
+  .insights h2 {
+    text-align: center;
+    font-size: 28px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .insights .sub-h2 {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 800px) {
+    .insight-grid { grid-template-columns: 1fr; }
+  }
+
+  .insight {
+    background: #fff;
+    padding: 24px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+  }
+  .insight .num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--gold-dark);
+    margin-bottom: 6px;
+  }
+  .insight h3 {
+    font-size: 16px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .insight p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .footer-note strong { color: var(--navy); }
+
+  .pulse { animation: pulse 0.4s ease; }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="brandbar">
+  <div class="brandbar-inner">
+    <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+    <div class="partner-label">
+      Présenté par
+      <span>en partenariat</span>
+    </div>
+    <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+  </div>
+</div>
+
+<header class="hero">
+  <div class="container">
+    <div class="badge-row">
+      <div class="tool-chip">
+        <img src="power-bi-logo.png" alt="Microsoft Power BI">
+        <span>Microsoft Power BI</span>
+      </div>
+      <span class="badge">Calculateur — Le CFO masqué</span>
+    </div>
+    <h1>Combien vous coûtent les <span class="strike">décisions sans données</span><br>
+    et les <span class="accent">KPI en retard</span> ?</h1>
+    <p class="lead">
+      Décisions prises au jugé, tableaux de bord obsolètes, données qui arrivent deux semaines trop tard…
+      Quand les bons KPI ne sont pas à portée de main, ce sont des dollars qui s'évaporent silencieusement.
+      Mettez un chiffre concret sur ce coût d'opportunité — et découvrez combien Power BI peut vous faire économiser.
+    </p>
+  </div>
+</header>
+
+<main class="main">
+  <div class="grid">
+
+    <!-- INPUTS -->
+    <section class="card">
+      <h2>Paramètres de votre situation</h2>
+      <p class="sub">Ajustez selon votre réalité. Les calculs se mettent à jour en direct.</p>
+
+      <div class="demo-banner">
+        <div class="icon">i</div>
+        <div class="text">
+          <strong>Exemple pré-rempli :</strong> Comité de direction mensuel d'une PME de services.
+          6 décisions importantes par mois prises sans tableau de bord à jour, 5 gestionnaires qui passent du temps à compiler des données dispersées,
+          et des opportunités qui passent inaperçues faute d'alertes en temps réel.
+        </div>
+      </div>
+
+      <h3 class="section-title">1. Décisions prises sans données fiables</h3>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="decisions">Décisions importantes par mois sans KPI à jour</label>
+          <span class="value-pill" id="decisionsPill">6</span>
+        </div>
+        <input type="range" id="decisions" min="0" max="40" step="1" value="6">
+        <div class="hint">Décisions de gestion (achats, prix, embauche, marketing, allocation budgétaire) prises au comité de direction ou par les gestionnaires sans accès à un tableau de bord à jour.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="decisionValue">Valeur moyenne en jeu par décision ($)</label>
+          <span class="value-pill" id="decisionValuePill">30 000 $</span>
+        </div>
+        <input type="range" id="decisionValue" min="1000" max="200000" step="1000" value="30000">
+        <div class="hint">Montant moyen impacté par chaque décision (revenus générés, coûts engagés, budget alloué).</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="gap">Écart de performance — décision au jugé vs décision data-driven</label>
+          <span class="value-pill" id="gapPill">8 %</span>
+        </div>
+        <input type="range" id="gap" min="0" max="25" step="0.5" value="8">
+        <div class="hint">Études McKinsey/MIT : les organisations data-driven prennent des décisions 5 à 15 % plus performantes en moyenne. Cet écart représente la valeur laissée sur la table.</div>
+      </div>
+
+      <h3 class="section-title">2. Temps perdu à compiler et chercher des données</h3>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="people">Personnes qui consultent ou compilent des données régulièrement</label>
+          <span class="value-pill" id="peoplePill">5</span>
+        </div>
+        <input type="range" id="people" min="1" max="50" step="1" value="5">
+        <div class="hint">Gestionnaires, analystes, contrôleurs, directeurs qui ont besoin de chiffres pour prendre des décisions.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="hoursWasted">Heures par semaine perdues par personne à chercher / compiler</label>
+          <span class="value-pill" id="hoursWastedPill">4 h</span>
+        </div>
+        <input type="range" id="hoursWasted" min="0" max="20" step="0.5" value="4">
+        <div class="hint">Naviguer dans plusieurs fichiers, demander à un collègue, attendre un rapport, refaire un calcul déjà fait ailleurs. Power BI centralise et automatise.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="rate">Salaire horaire chargé moyen ($)</label>
+          <span class="value-pill" id="ratePill">65 $/h</span>
+        </div>
+        <input type="range" id="rate" min="20" max="200" step="1" value="65">
+        <div class="hint">Coût horaire chargé moyen pour ces personnes (incluant charges sociales et avantages — généralement +25 à +35 % du salaire brut).</div>
+      </div>
+
+      <h3 class="section-title">3. Opportunités et anomalies vues trop tard</h3>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="opportunities">Opportunités ou anomalies manquées par mois</label>
+          <span class="value-pill" id="opportunitiesPill">2</span>
+        </div>
+        <input type="range" id="opportunities" min="0" max="20" step="1" value="2">
+        <div class="hint">Pic de ventes non exploité, dérive de marge non détectée à temps, client sur le point de partir, fournisseur qui dérape, gaspillage opérationnel… autant de signaux qu'un bon dashboard met en évidence.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="opportunityValue">Valeur moyenne d'une opportunité manquée ($)</label>
+          <span class="value-pill" id="opportunityValuePill">10 000 $</span>
+        </div>
+        <input type="range" id="opportunityValue" min="500" max="100000" step="500" value="10000">
+        <div class="hint">Impact financier moyen d'avoir réagi en retard (ou pas du tout) à un signal qui était dans les données.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="delay">Délai actuel pour obtenir un KPI à jour (jours)</label>
+          <span class="value-pill" id="delayPill">12 j</span>
+        </div>
+        <input type="range" id="delay" min="0" max="60" step="1" value="12">
+        <div class="hint">Plus le délai entre l'événement et la donnée est long, plus les opportunités manquées coûtent cher. Avec Power BI, ce délai tombe souvent à quelques minutes.</div>
+      </div>
+
+    </section>
+
+    <!-- RESULTS -->
+    <aside class="card results-card">
+      <h2 style="color:#fff;">Votre coût annuel caché</h2>
+      <p class="sub" style="color:rgba(255,255,255,0.65);">Estimation basée sur vos paramètres</p>
+
+      <div class="total-display">
+        <div class="label">Coût total par année</div>
+        <div class="amount" id="totalAnnual">0 $</div>
+        <div class="period">économies potentielles avec les bons KPI à portée de main</div>
+      </div>
+
+      <div class="breakdown">
+        <div class="breakdown-item">
+          <span class="name">Décisions sub-optimales (au jugé)</span>
+          <span class="amt" id="decisionCost">— $</span>
+        </div>
+        <div class="breakdown-item warn">
+          <span class="name">Temps perdu à compiler les données</span>
+          <span class="amt" id="timeCost">— $</span>
+        </div>
+        <div class="breakdown-item danger">
+          <span class="name">Opportunités vues trop tard</span>
+          <span class="amt" id="opportunityCost">— $</span>
+        </div>
+      </div>
+
+      <div class="horizon">
+        <div class="label">Sur un horizon de 3 ans</div>
+        <div class="amount" id="threeYear">0 $</div>
+      </div>
+
+      <a class="cta" href="https://lecfomasque.com/ref/107/" target="_blank" rel="noopener">
+        Éviter de perdre ces sommes — Voir les formations <span class="arrow">→</span>
+      </a>
+      <p class="cta-sub">Une formation Power BI structurée se rentabilise souvent dès le premier trimestre.</p>
+    </aside>
+
+  </div>
+
+  <!-- INSIGHTS -->
+  <section class="insights">
+    <h2>Pourquoi ces coûts restent invisibles</h2>
+    <p class="sub-h2">L'absence de visibilité sur les bons KPI ne génère pas de facture — mais les pertes sont bien réelles.</p>
+
+    <div class="insight-grid">
+      <div class="insight">
+        <div class="num">↘</div>
+        <h3>Les décisions au jugé ne sont jamais comparées</h3>
+        <p>Une décision prise sans données ne montre pas son écart avec ce qui aurait été optimal. Le manque à gagner reste invisible — mais il est réel et récurrent.</p>
+      </div>
+      <div class="insight">
+        <div class="num">⏱</div>
+        <h3>Le délai d'accès aux données est sous-estimé</h3>
+        <p>Quand un KPI arrive 2 semaines après l'événement, la fenêtre d'action est déjà fermée. Power BI ramène ce délai de jours à minutes, et change la nature même de la décision.</p>
+      </div>
+      <div class="insight">
+        <div class="num">⚠</div>
+        <h3>Les anomalies passent sous le radar</h3>
+        <p>Sans alertes automatiques sur les bons indicateurs, les dérives de marge, les pertes de clients ou les pics non exploités ne sont détectés qu'en post-mortem — quand il est trop tard.</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="footer-note">
+    <strong>Le CFO masqué</strong> — Formations Excel et Power BI pour analystes, contrôleurs de gestion et CPA.<br>
+    Plus de 26 000 apprenants formés. Certifications Qualiopi (France) et SOFEDUC (Québec).
+    <div class="footer-logos">
+      <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+      <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+    </div>
+  </p>
+</main>
+
+<script>
+  const fmt = new Intl.NumberFormat('fr-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 });
+
+  const els = {
+    decisions: document.getElementById('decisions'),
+    decisionsPill: document.getElementById('decisionsPill'),
+    decisionValue: document.getElementById('decisionValue'),
+    decisionValuePill: document.getElementById('decisionValuePill'),
+    gap: document.getElementById('gap'),
+    gapPill: document.getElementById('gapPill'),
+
+    people: document.getElementById('people'),
+    peoplePill: document.getElementById('peoplePill'),
+    hoursWasted: document.getElementById('hoursWasted'),
+    hoursWastedPill: document.getElementById('hoursWastedPill'),
+    rate: document.getElementById('rate'),
+    ratePill: document.getElementById('ratePill'),
+
+    opportunities: document.getElementById('opportunities'),
+    opportunitiesPill: document.getElementById('opportunitiesPill'),
+    opportunityValue: document.getElementById('opportunityValue'),
+    opportunityValuePill: document.getElementById('opportunityValuePill'),
+    delay: document.getElementById('delay'),
+    delayPill: document.getElementById('delayPill'),
+
+    totalAnnual: document.getElementById('totalAnnual'),
+    decisionCost: document.getElementById('decisionCost'),
+    timeCost: document.getElementById('timeCost'),
+    opportunityCost: document.getElementById('opportunityCost'),
+    threeYear: document.getElementById('threeYear'),
+  };
+
+  function recalc() {
+    const decisions = parseFloat(els.decisions.value);
+    const decValue = parseFloat(els.decisionValue.value);
+    const gap = parseFloat(els.gap.value) / 100;
+
+    const people = parseFloat(els.people.value);
+    const hoursWasted = parseFloat(els.hoursWasted.value);
+    const rate = parseFloat(els.rate.value);
+
+    const opportunities = parseFloat(els.opportunities.value);
+    const opportunityValue = parseFloat(els.opportunityValue.value);
+    const delay = parseFloat(els.delay.value);
+
+    // Pills
+    els.decisionsPill.textContent = `${decisions}`;
+    els.decisionValuePill.textContent = fmt.format(decValue);
+    els.gapPill.textContent = `${gap === 0 ? '0' : (gap * 100).toFixed(gap * 100 % 1 === 0 ? 0 : 1)} %`;
+    els.peoplePill.textContent = `${people}`;
+    els.hoursWastedPill.textContent = `${hoursWasted} h`;
+    els.ratePill.textContent = `${rate} $/h`;
+    els.opportunitiesPill.textContent = `${opportunities}`;
+    els.opportunityValuePill.textContent = fmt.format(opportunityValue);
+    els.delayPill.textContent = `${delay} j`;
+
+    // 1. Décisions sub-optimales
+    // décisions/mois × 12 mois × valeur × écart %
+    const decisionCost = decisions * 12 * decValue * gap;
+
+    // 2. Temps perdu à compiler
+    // personnes × heures/sem × 48 sem × taux
+    const timeCost = people * hoursWasted * 48 * rate;
+
+    // 3. Opportunités manquées (amplifié par le délai)
+    // base : opportunities/mois × 12 × valeur
+    // multiplicateur de latence : 1 + (délai / 30) — un délai de 30 jours double l'impact
+    const latencyMultiplier = 1 + (delay / 30);
+    const opportunityCost = opportunities * 12 * opportunityValue * latencyMultiplier;
+
+    const totalAnnual = decisionCost + timeCost + opportunityCost;
+    const threeYear = totalAnnual * 3;
+
+    setVal('decisionCost', decisionCost);
+    setVal('timeCost', timeCost);
+    setVal('opportunityCost', opportunityCost);
+    setVal('totalAnnual', totalAnnual, true);
+    setVal('threeYear', threeYear);
+  }
+
+  function setVal(id, num, animate) {
+    const el = els[id];
+    el.textContent = fmt.format(num);
+    if (animate) {
+      el.classList.remove('pulse');
+      void el.offsetWidth;
+      el.classList.add('pulse');
+    }
+  }
+
+  Object.values(els).forEach(el => {
+    if (el && (el.tagName === 'INPUT' || el.tagName === 'SELECT')) {
+      el.addEventListener('input', recalc);
+      el.addEventListener('change', recalc);
+    }
+  });
+
+  recalc();
+</script>
+
+</body>
+</html>

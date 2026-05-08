@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Combien vous coûte une mauvaise utilisation d'Excel ? | Le CFO masqué</title>
+<style>
+  :root {
+    --navy: #0f1e3d;
+    --navy-2: #1a2d52;
+    --navy-3: #243a66;
+    --teal: #1fb8a6;
+    --teal-dark: #189a8b;
+    --gold: #f5b945;
+    --red: #e94e4e;
+    --red-soft: #ff6b6b;
+    --bg: #f6f8fc;
+    --card: #ffffff;
+    --text: #1a2640;
+    --muted: #6b7895;
+    --line: #e3e8f2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Top brand bar */
+  .brandbar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--line);
+    padding: 18px 24px;
+  }
+  .brandbar-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .brandbar img {
+    display: block;
+    max-height: 56px;
+    width: auto;
+  }
+  .brandbar .partner-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    font-weight: 600;
+    text-align: center;
+    flex: 1;
+  }
+  .brandbar .partner-label span {
+    display: block;
+    color: var(--navy);
+    font-size: 11px;
+    margin-top: 2px;
+    letter-spacing: 0.8px;
+  }
+  @media (max-width: 700px) {
+    .brandbar-inner { justify-content: center; }
+    .brandbar .partner-label { flex: 0 0 100%; order: -1; margin-bottom: 4px; }
+    .brandbar img { max-height: 44px; }
+  }
+
+  /* Footer logo strip */
+  .footer-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-logos img {
+    max-height: 44px;
+    width: auto;
+    opacity: 0.9;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+    color: #fff;
+    padding: 56px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(31,184,166,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(245,185,69,0.10) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(31,184,166,0.18);
+    color: var(--teal);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(31,184,166,0.35);
+  }
+
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .tool-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: rgba(255,255,255,0.97);
+    padding: 6px 16px 6px 8px;
+    border-radius: 100px;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  }
+  .tool-chip img {
+    height: 24px;
+    width: auto;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  h1 .accent { color: var(--gold); }
+  h1 .excel { color: #2bb673; }
+  h1 .strike { color: var(--red-soft); }
+
+  .hero p.lead {
+    font-size: 18px;
+    color: rgba(255,255,255,0.82);
+    max-width: 720px;
+  }
+
+  .main {
+    max-width: 1180px;
+    margin: -50px auto 0;
+    padding: 0 24px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 12px 40px rgba(15,30,61,0.08);
+    border: 1px solid var(--line);
+  }
+
+  .card h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+    color: var(--navy);
+    font-weight: 700;
+  }
+
+  .card .sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .field {
+    margin-bottom: 22px;
+  }
+
+  .field-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .field label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .field .value-pill {
+    background: var(--navy);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .field .hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .input-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+  }
+
+  input[type="number"], select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    font-size: 15px;
+    color: var(--text);
+    background: #fff;
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(31,184,166,0.15);
+  }
+
+  input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: var(--line);
+    border-radius: 100px;
+    outline: none;
+    margin-top: 4px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--teal);
+    cursor: pointer;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(31,184,166,0.4);
+    transition: transform 0.1s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--teal);
+    cursor: pointer;
+    border: 3px solid #fff;
+  }
+
+  .demo-banner {
+    background: linear-gradient(135deg, rgba(245,185,69,0.12), rgba(245,185,69,0.04));
+    border: 1px solid rgba(245,185,69,0.35);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .demo-banner .icon {
+    background: var(--gold);
+    color: #fff;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .demo-banner .text { font-size: 13px; color: var(--text); }
+  .demo-banner .text strong { color: var(--navy); }
+
+  /* RESULTS */
+  .results-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff;
+    border: none;
+    position: sticky;
+    top: 20px;
+    align-self: start;
+  }
+
+  .results-card h2 { color: #fff; }
+  .results-card .sub { color: rgba(255,255,255,0.65); }
+
+  .total-display {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  .total-display .label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .total-display .amount {
+    font-size: clamp(36px, 6vw, 54px);
+    font-weight: 800;
+    color: var(--red-soft);
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .total-display .period {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  .breakdown {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px;
+    border-left: 3px solid var(--teal);
+  }
+
+  .breakdown-item.warn { border-left-color: var(--gold); }
+  .breakdown-item.danger { border-left-color: var(--red); }
+
+  .breakdown-item .name {
+    font-size: 14px;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .breakdown-item .amt {
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .horizon {
+    background: rgba(233,78,78,0.10);
+    border: 1px solid rgba(233,78,78,0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .horizon .label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+
+  .horizon .amount {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--red-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cta {
+    display: block;
+    text-align: center;
+    background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+    color: #fff;
+    text-decoration: none;
+    padding: 18px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.3px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 8px 24px rgba(31,184,166,0.35);
+    margin-top: 8px;
+  }
+
+  .cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(31,184,166,0.5);
+  }
+
+  .cta .arrow {
+    display: inline-block;
+    margin-left: 6px;
+    transition: transform 0.15s;
+  }
+  .cta:hover .arrow { transform: translateX(4px); }
+
+  .cta-sub {
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 12px;
+  }
+
+  /* Insight section */
+  .insights {
+    margin-top: 60px;
+  }
+
+  .insights h2 {
+    text-align: center;
+    font-size: 28px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .insights .sub-h2 {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 800px) {
+    .insight-grid { grid-template-columns: 1fr; }
+  }
+
+  .insight {
+    background: #fff;
+    padding: 24px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+  }
+  .insight .num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--teal);
+    margin-bottom: 6px;
+  }
+  .insight h3 {
+    font-size: 16px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .insight p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .footer-note strong { color: var(--navy); }
+
+  /* Animation on number changes */
+  .pulse { animation: pulse 0.4s ease; }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="brandbar">
+  <div class="brandbar-inner">
+    <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+    <div class="partner-label">
+      Présenté par
+      <span>en partenariat</span>
+    </div>
+    <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+  </div>
+</div>
+
+<header class="hero">
+  <div class="container">
+    <div class="badge-row">
+      <div class="tool-chip">
+        <img src="excel-logo.png" alt="Microsoft Excel">
+        <span>Microsoft Excel</span>
+      </div>
+      <span class="badge">Calculateur — Le CFO masqué</span>
+    </div>
+    <h1>Combien vous coûte une <span class="strike">mauvaise utilisation</span><br>
+    d'<span class="excel">Excel</span> chaque année ?</h1>
+    <p class="lead">
+      Tâches manuelles répétitives, formules fragiles, fichiers qui plantent quand l'employé clé est en vacances…
+      Mettez un chiffre concret sur ce que cela coûte vraiment à votre entreprise — et découvrez combien vous pourriez éviter de perdre.
+    </p>
+  </div>
+</header>
+
+<main class="main">
+  <div class="grid">
+
+    <!-- INPUTS -->
+    <section class="card">
+      <h2>Paramètres de votre situation</h2>
+      <p class="sub">Ajustez selon votre réalité. Les calculs se mettent à jour en direct.</p>
+
+      <div class="demo-banner">
+        <div class="icon">!</div>
+        <div class="text">
+          <strong>Exemple pré-rempli :</strong> Consolidation mensuelle des ventes par région — un grand classique.
+          Un analyste passe une journée complète chaque mois à copier-coller, vérifier les totaux et corriger les formules brisées.
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="hours">Heures consacrées à la tâche (par occurrence)</label>
+          <span class="value-pill" id="hoursPill">8 h</span>
+        </div>
+        <input type="range" id="hours" min="0.5" max="40" step="0.5" value="8">
+        <div class="hint">Temps total passé chaque fois que la tâche est exécutée (préparation, manipulations, validation, corrections).</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="frequency">Récurrence de la tâche</label>
+        </div>
+        <select id="frequency">
+          <option value="240">Quotidienne (240 jours ouvrés/an)</option>
+          <option value="52">Hebdomadaire</option>
+          <option value="26">Aux 2 semaines</option>
+          <option value="12" selected>Mensuelle</option>
+          <option value="4">Trimestrielle</option>
+          <option value="2">Semestrielle</option>
+          <option value="1">Annuelle</option>
+        </select>
+        <div class="hint">À quelle fréquence cette tâche est-elle reproduite dans l'année ?</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="rate">Salaire horaire chargé (incluant charges sociales)</label>
+          <span class="value-pill" id="ratePill">55 $/h</span>
+        </div>
+        <input type="range" id="rate" min="20" max="150" step="1" value="55">
+        <div class="hint">Coût horaire réel pour l'employeur : salaire + charges sociales, avantages, RRQ/RQAP, CNESST, etc. (généralement +25 à +35 % du salaire brut).</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="inefficiency">Part du temps perdu en manipulations évitables</label>
+          <span class="value-pill" id="ineffPill">45 %</span>
+        </div>
+        <input type="range" id="inefficiency" min="0" max="80" step="5" value="45">
+        <div class="hint">Copier-coller, recherches manuelles, mises en forme répétées, débogage de formules… Ces tâches disparaissent presque entièrement avec Power Query, les tableaux structurés et l'automatisation.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="errorRate">Taux d'erreurs détectées (et leur coût moyen)</label>
+          <span class="value-pill" id="errorPill">15 %</span>
+        </div>
+        <input type="range" id="errorRate" min="0" max="50" step="1" value="15">
+        <div class="hint">Pourcentage des occurrences qui contiennent une erreur nécessitant correction, retraitement ou explication à la direction.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="errorCost">Coût moyen d'une erreur (heures perdues à corriger)</label>
+          <span class="value-pill" id="errorCostPill">4 h</span>
+        </div>
+        <input type="range" id="errorCost" min="0" max="40" step="1" value="4">
+        <div class="hint">Temps additionnel pour identifier la source, refaire le travail et communiquer la correction.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="vacation">Vulnérabilité lors des congés de l'employé clé</label>
+          <span class="value-pill" id="vacationPill">4 sem.</span>
+        </div>
+        <input type="range" id="vacation" min="0" max="12" step="1" value="4">
+        <div class="hint">Nombre de semaines par année où l'employé qui maîtrise le fichier est absent (vacances, maladie, formation, départ).</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="vulnerability">Surcoût quand quelqu'un d'autre doit prendre le relais</label>
+          <span class="value-pill" id="vulnPill">2,5 ×</span>
+        </div>
+        <input type="range" id="vulnerability" min="1" max="5" step="0.1" value="2.5">
+        <div class="hint">Multiplicateur de temps lorsqu'un collègue moins familier doit reprendre le fichier. Inclut : compréhension du modèle, tâtonnements, risque d'erreur accru, sollicitation du supérieur.</div>
+      </div>
+
+    </section>
+
+    <!-- RESULTS -->
+    <aside class="card results-card">
+      <h2 style="color:#fff;">Votre coût annuel caché</h2>
+      <p class="sub" style="color:rgba(255,255,255,0.65);">Estimation basée sur vos paramètres</p>
+
+      <div class="total-display">
+        <div class="label">Coût total par année</div>
+        <div class="amount" id="totalAnnual">0 $</div>
+        <div class="period">argent qui sort de votre entreprise — chaque année</div>
+      </div>
+
+      <div class="breakdown">
+        <div class="breakdown-item">
+          <span class="name">Temps total investi dans la tâche</span>
+          <span class="amt" id="baseCost">— $</span>
+        </div>
+        <div class="breakdown-item warn">
+          <span class="name">Manipulations évitables (inefficacité)</span>
+          <span class="amt" id="ineffCost">— $</span>
+        </div>
+        <div class="breakdown-item warn">
+          <span class="name">Correction des erreurs</span>
+          <span class="amt" id="errorTotalCost">— $</span>
+        </div>
+        <div class="breakdown-item danger">
+          <span class="name">Vulnérabilité lors des congés</span>
+          <span class="amt" id="vulnCost">— $</span>
+        </div>
+      </div>
+
+      <div class="horizon">
+        <div class="label">Sur un horizon de 3 ans</div>
+        <div class="amount" id="threeYear">0 $</div>
+      </div>
+
+      <a class="cta" href="https://lecfomasque.com/ref/107/" target="_blank" rel="noopener">
+        Éviter de perdre ces sommes — Voir les formations <span class="arrow">→</span>
+      </a>
+      <p class="cta-sub">Une formation de quelques heures se rentabilise souvent dès le premier mois.</p>
+    </aside>
+
+  </div>
+
+  <!-- INSIGHTS -->
+  <section class="insights">
+    <h2>Pourquoi ces chiffres sont rarement visibles</h2>
+    <p class="sub-h2">La mauvaise utilisation d'Excel coûte cher — mais les coûts sont diffus, donc invisibles dans le P&amp;L.</p>
+
+    <div class="insight-grid">
+      <div class="insight">
+        <div class="num">×</div>
+        <h3>Ils sont noyés dans la masse salariale</h3>
+        <p>Personne ne facture séparément « 6 heures perdues à copier-coller ». Ces heures sont absorbées dans le salaire de l'employé, sans ligne budgétaire dédiée.</p>
+      </div>
+      <div class="insight">
+        <div class="num">!</div>
+        <h3>Les erreurs sont souvent rattrapées</h3>
+        <p>Les écarts détectés à temps n'apparaissent jamais. Mais le temps de validation, de retraitement et la fatigue décisionnelle sont bien réels.</p>
+      </div>
+      <div class="insight">
+        <div class="num">?</div>
+        <h3>La vulnérabilité ne se voit qu'au pire moment</h3>
+        <p>Le coût d'un fichier qu'une seule personne maîtrise n'apparaît qu'au moment d'un départ, d'une maladie ou d'une fin d'année critique. Trop tard.</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="footer-note">
+    <strong>Le CFO masqué</strong> — Formations Excel et Power BI pour analystes, contrôleurs de gestion et CPA.<br>
+    Plus de 26 000 apprenants formés. Certifications Qualiopi (France) et SOFEDUC (Québec).
+    <div class="footer-logos">
+      <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+      <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+    </div>
+  </p>
+</main>
+
+<script>
+  const fmt = new Intl.NumberFormat('fr-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 });
+
+  const els = {
+    hours: document.getElementById('hours'),
+    hoursPill: document.getElementById('hoursPill'),
+    frequency: document.getElementById('frequency'),
+    rate: document.getElementById('rate'),
+    ratePill: document.getElementById('ratePill'),
+    inefficiency: document.getElementById('inefficiency'),
+    ineffPill: document.getElementById('ineffPill'),
+    errorRate: document.getElementById('errorRate'),
+    errorPill: document.getElementById('errorPill'),
+    errorCost: document.getElementById('errorCost'),
+    errorCostPill: document.getElementById('errorCostPill'),
+    vacation: document.getElementById('vacation'),
+    vacationPill: document.getElementById('vacationPill'),
+    vulnerability: document.getElementById('vulnerability'),
+    vulnPill: document.getElementById('vulnPill'),
+
+    totalAnnual: document.getElementById('totalAnnual'),
+    baseCost: document.getElementById('baseCost'),
+    ineffCost: document.getElementById('ineffCost'),
+    errorTotalCost: document.getElementById('errorTotalCost'),
+    vulnCost: document.getElementById('vulnCost'),
+    threeYear: document.getElementById('threeYear'),
+  };
+
+  function recalc() {
+    const hours = parseFloat(els.hours.value);
+    const freq = parseFloat(els.frequency.value);
+    const rate = parseFloat(els.rate.value);
+    const ineffPct = parseFloat(els.inefficiency.value) / 100;
+    const errPct = parseFloat(els.errorRate.value) / 100;
+    const errHrs = parseFloat(els.errorCost.value);
+    const vacWeeks = parseFloat(els.vacation.value);
+    const vuln = parseFloat(els.vulnerability.value);
+
+    // Update pills
+    els.hoursPill.textContent = `${hours} h`;
+    els.ratePill.textContent = `${rate} $/h`;
+    els.ineffPill.textContent = `${(ineffPct * 100).toFixed(0)} %`;
+    els.errorPill.textContent = `${(errPct * 100).toFixed(0)} %`;
+    els.errorCostPill.textContent = `${errHrs} h`;
+    els.vacationPill.textContent = `${vacWeeks} sem.`;
+    els.vulnPill.textContent = `${vuln.toFixed(1)} ×`;
+
+    // 1. Coût direct annuel de la tâche (informatif)
+    const baseCost = hours * freq * rate;
+
+    // 2. Coût d'inefficacité (% du temps qui pourrait être éliminé)
+    const ineffCost = baseCost * ineffPct;
+
+    // 3. Coût des erreurs : (occurrences × % erreur) × heures de correction × taux
+    const errorTotalCost = freq * errPct * errHrs * rate;
+
+    // 4. Vulnérabilité congés :
+    //    Quelle proportion des occurrences tombe pendant les vacances ?
+    //    (vacWeeks / 52) × freq, multipliée par le surcoût (vuln - 1)
+    const vacShare = Math.min(vacWeeks / 52, 1);
+    const occurrencesPendantVac = vacShare * freq;
+    const vulnCost = occurrencesPendantVac * hours * rate * (vuln - 1);
+
+    // Total = inefficacité + erreurs + vulnérabilité
+    // (Le "baseCost" est le coût total de la tâche, dont une partie est récupérable)
+    const totalAnnual = ineffCost + errorTotalCost + vulnCost;
+    const threeYear = totalAnnual * 3;
+
+    setVal('baseCost', baseCost);
+    setVal('ineffCost', ineffCost);
+    setVal('errorTotalCost', errorTotalCost);
+    setVal('vulnCost', vulnCost);
+    setVal('totalAnnual', totalAnnual, true);
+    setVal('threeYear', threeYear);
+  }
+
+  function setVal(id, num, animate) {
+    const el = els[id];
+    el.textContent = fmt.format(num);
+    if (animate) {
+      el.classList.remove('pulse');
+      void el.offsetWidth;
+      el.classList.add('pulse');
+    }
+  }
+
+  Object.values(els).forEach(el => {
+    if (el && (el.tagName === 'INPUT' || el.tagName === 'SELECT')) {
+      el.addEventListener('input', recalc);
+      el.addEventListener('change', recalc);
+    }
+  });
+
+  recalc();
+</script>
+
+</body>
+</html>

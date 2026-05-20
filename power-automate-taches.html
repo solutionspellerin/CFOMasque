@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Combien vous coûtent les tâches répétitives ? | Le CFO masqué</title>
+<style>
+  :root {
+    --navy: #0f1e3d;
+    --navy-2: #1a2d52;
+    --navy-3: #243a66;
+    --teal: #1fb8a6;
+    --teal-dark: #189a8b;
+    --automate: #2563eb;
+    --automate-dark: #1d4ed8;
+    --automate-light: #60a5fa;
+    --green: #10b981;
+    --green-dark: #059669;
+    --red: #e94e4e;
+    --red-soft: #ff6b6b;
+    --bg: #f6f8fc;
+    --card: #ffffff;
+    --text: #1a2640;
+    --muted: #6b7895;
+    --line: #e3e8f2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .brandbar { background: #fff; border-bottom: 1px solid var(--line); padding: 18px 24px; }
+  .brandbar-inner {
+    max-width: 1180px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap;
+  }
+  .brandbar img { display: block; max-height: 56px; width: auto; }
+  .brandbar .partner-label {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px;
+    color: var(--muted); font-weight: 600; text-align: center; flex: 1;
+  }
+  .brandbar .partner-label span {
+    display: block; color: var(--navy); font-size: 11px;
+    margin-top: 2px; letter-spacing: 0.8px;
+  }
+  @media (max-width: 700px) {
+    .brandbar-inner { justify-content: center; }
+    .brandbar .partner-label { flex: 0 0 100%; order: -1; margin-bottom: 4px; }
+    .brandbar img { max-height: 44px; }
+  }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--automate-light); text-decoration: none; font-weight: 600;
+    font-size: 13px; margin-bottom: 14px; opacity: 0.9;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .back-link:hover { opacity: 1; transform: translateX(-2px); }
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+    color: #fff; padding: 48px 24px 80px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(37,99,235,0.22) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -150px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(31,184,166,0.10) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+  .badge {
+    display: inline-block; background: rgba(37,99,235,0.22);
+    color: var(--automate-light); padding: 6px 14px; border-radius: 100px;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase; border: 1px solid rgba(96,165,250,0.4);
+  }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; }
+  .tool-chip {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(255,255,255,0.97); padding: 6px 16px 6px 8px;
+    border-radius: 100px; font-weight: 700; color: var(--navy);
+    font-size: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  }
+  .tool-chip img { height: 24px; width: auto; display: block; }
+  h1 {
+    font-size: clamp(28px, 4vw, 44px); line-height: 1.15; font-weight: 800;
+    margin-bottom: 16px; letter-spacing: -0.5px;
+  }
+  h1 .accent { color: var(--automate-light); }
+  h1 .strike { color: var(--red-soft); }
+  .hero p.lead { font-size: 18px; color: rgba(255,255,255,0.82); max-width: 720px; }
+  .main { max-width: 1180px; margin: -50px auto 0; padding: 0 24px 80px; position: relative; z-index: 2; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card); border-radius: 16px; padding: 32px;
+    box-shadow: 0 12px 40px rgba(15,30,61,0.08); border: 1px solid var(--line);
+  }
+  .card h2 { font-size: 20px; margin-bottom: 6px; color: var(--navy); font-weight: 700; }
+  .card .sub { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .field { margin-bottom: 22px; }
+  .field-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .field label { font-size: 14px; font-weight: 600; color: var(--text); }
+  .field .value-pill {
+    background: var(--navy); color: #fff; padding: 4px 12px;
+    border-radius: 100px; font-size: 13px; font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .field .hint { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+  input[type="range"] {
+    width: 100%; -webkit-appearance: none; appearance: none;
+    height: 6px; background: var(--line); border-radius: 100px; outline: none; margin-top: 4px;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--automate); cursor: pointer; border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.45); transition: transform 0.1s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--automate); cursor: pointer; border: 3px solid #fff;
+  }
+  .demo-banner {
+    background: linear-gradient(135deg, rgba(37,99,235,0.10), rgba(37,99,235,0.02));
+    border: 1px solid rgba(37,99,235,0.28); border-radius: 12px;
+    padding: 14px 16px; margin-bottom: 24px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .demo-banner .icon {
+    background: var(--automate); color: #fff; width: 28px; height: 28px;
+    border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px;
+  }
+  .demo-banner .text { font-size: 13px; color: var(--text); }
+  .demo-banner .text strong { color: var(--navy); }
+  .results-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff; border: none;
+    position: sticky; top: 20px; align-self: start;
+  }
+  .results-card h2 { color: #fff; }
+  .results-card .sub { color: rgba(255,255,255,0.65); }
+  .total-display {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 24px; text-align: center; margin-bottom: 22px;
+  }
+  .total-display .label {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--automate-light); font-weight: 700; margin-bottom: 8px;
+  }
+  .total-display .amount {
+    font-size: clamp(36px, 6vw, 54px); font-weight: 800; color: var(--red-soft);
+    letter-spacing: -1px; font-variant-numeric: tabular-nums; line-height: 1;
+  }
+  .total-display .period { color: rgba(255,255,255,0.7); font-size: 14px; margin-top: 6px; }
+  .breakdown { display: grid; gap: 10px; margin-bottom: 22px; }
+  .breakdown-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 16px; background: rgba(255,255,255,0.04);
+    border-radius: 10px; border-left: 3px solid var(--automate-light);
+  }
+  .breakdown-item.warn { border-left-color: var(--teal); }
+  .breakdown-item .name { font-size: 14px; color: rgba(255,255,255,0.9); }
+  .breakdown-item .amt {
+    font-weight: 700; font-size: 16px; color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  .time-badge {
+    background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+    border-radius: 12px; padding: 18px;
+    margin-bottom: 22px; display: flex; gap: 14px; align-items: center;
+    box-shadow: 0 8px 24px rgba(31,184,166,0.28);
+  }
+  .time-badge .star-icon {
+    background: rgba(255,255,255,0.2); width: 44px; height: 44px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 22px; font-weight: 800; color: #fff;
+  }
+  .time-badge .text { color: #fff; }
+  .time-badge .text .title {
+    font-size: 13px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .time-badge .text .desc { font-size: 13px; line-height: 1.4; opacity: 0.95; }
+  .horizon {
+    background: rgba(233,78,78,0.10); border: 1px solid rgba(233,78,78,0.3);
+    border-radius: 12px; padding: 16px; margin-bottom: 24px; text-align: center;
+  }
+  .horizon .label {
+    font-size: 12px; color: rgba(255,255,255,0.7);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;
+  }
+  .horizon .amount {
+    font-size: 28px; font-weight: 800; color: var(--red-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  .cta {
+    display: block; text-align: center;
+    background: linear-gradient(135deg, var(--automate) 0%, var(--automate-dark) 100%);
+    color: #fff; text-decoration: none; padding: 18px 24px;
+    border-radius: 12px; font-weight: 800; font-size: 16px;
+    letter-spacing: 0.3px; transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 8px 24px rgba(37,99,235,0.35); margin-top: 8px;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(37,99,235,0.5); }
+  .cta .arrow { display: inline-block; margin-left: 6px; transition: transform 0.15s; }
+  .cta:hover .arrow { transform: translateX(4px); }
+  .cta-sub {
+    text-align: center; font-size: 13px;
+    color: rgba(255,255,255,0.65); margin-top: 12px;
+  }
+  .insights { margin-top: 60px; }
+  .insights h2 { text-align: center; font-size: 28px; color: var(--navy); margin-bottom: 8px; }
+  .insights .sub-h2 { text-align: center; color: var(--muted); margin-bottom: 36px; }
+  .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 800px) { .insight-grid { grid-template-columns: 1fr; } }
+  .insight { background: #fff; padding: 24px; border-radius: 14px; border: 1px solid var(--line); }
+  .insight .num { font-size: 32px; font-weight: 800; color: var(--automate-dark); margin-bottom: 6px; }
+  .insight h3 { font-size: 16px; color: var(--navy); margin-bottom: 8px; }
+  .insight p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .footer-note {
+    text-align: center; margin-top: 50px; padding-top: 30px;
+    border-top: 1px solid var(--line); color: var(--muted); font-size: 13px;
+  }
+  .footer-note strong { color: var(--navy); }
+  .footer-logos {
+    display: flex; align-items: center; justify-content: center;
+    gap: 32px; margin-top: 24px; flex-wrap: wrap;
+  }
+  .footer-logos img { max-height: 44px; width: auto; opacity: 0.9; }
+  .pulse { animation: pulse 0.4s ease; }
+  @keyframes pulse {
+    0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="brandbar">
+  <div class="brandbar-inner">
+    <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+    <div class="partner-label">Présenté par<span>en partenariat</span></div>
+    <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+  </div>
+</div>
+
+<header class="hero">
+  <div class="container">
+    <a class="back-link" href="index.html">← Tous les calculateurs</a>
+    <div class="badge-row">
+      <div class="tool-chip">
+        <img src="power-automate-logo.svg" alt="Microsoft Power Automate">
+        <span>Microsoft Power Automate</span>
+      </div>
+      <span class="badge">Productivité — Le CFO masqué</span>
+    </div>
+    <h1>Combien vous coûtent les <span class="strike">tâches répétitives</span><br>
+    de toute votre <span class="accent">équipe</span> ?</h1>
+    <p class="lead">
+      Copier-coller entre systèmes, classement de pièces jointes, transferts de fichiers, mises à jour de tableaux.
+      Chacun pense que ce n'est qu'une demi-heure par jour — mais multipliez par dix personnes et 48 semaines, c'est
+      un poste à plein temps qui disparaît sans qu'on le voie. Mettez un chiffre sur ces heures perdues.
+    </p>
+  </div>
+</header>
+
+<main class="main">
+  <div class="grid">
+
+    <section class="card">
+      <h2>Paramètres de votre situation</h2>
+      <p class="sub">Ajustez selon votre réalité. Les calculs se mettent à jour en direct.</p>
+
+      <div class="demo-banner">
+        <div class="icon">i</div>
+        <div class="text">
+          <strong>Exemple pré-rempli :</strong> 12 personnes — comptables, RH, ventes, opérations — qui passent
+          5 h par semaine sur des tâches répétitives automatisables. Salaire chargé moyen de 65 $/h, sur 48 semaines
+          de travail effectif par année. Power Automate peut absorber environ 75 % de ces tâches.
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="people">Personnes concernées par des tâches répétitives</label>
+          <span class="value-pill" id="peoplePill">12</span>
+        </div>
+        <input type="range" id="people" min="0" max="100" step="1" value="12">
+        <div class="hint">Comptables, RH, ventes, opérations, gestion documentaire… toute personne qui passe du temps à copier, classer, transférer, transmettre.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="hoursWasted">Heures par semaine perdues par personne sur des tâches automatisables</label>
+          <span class="value-pill" id="hoursWastedPill">5 h</span>
+        </div>
+        <input type="range" id="hoursWasted" min="0" max="20" step="0.5" value="5">
+        <div class="hint">Saisies répétées, transferts de fichiers, envois de courriels standardisés, mises à jour de feuilles de calcul, classement de pièces jointes.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="rate">Salaire horaire chargé moyen ($/h)</label>
+          <span class="value-pill" id="ratePill">65 $/h</span>
+        </div>
+        <input type="range" id="rate" min="20" max="200" step="1" value="65">
+        <div class="hint">Coût horaire chargé moyen pour ces personnes (incluant charges sociales et avantages — généralement +25 à +35 % du salaire brut).</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="weeks">Semaines actives de travail par année</label>
+          <span class="value-pill" id="weeksPill">48</span>
+        </div>
+        <input type="range" id="weeks" min="30" max="52" step="1" value="48">
+        <div class="hint">Hors vacances, congés et jours fériés. 48 semaines est typique pour un employé canadien.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="automatable">Part automatisable par un flux Power Automate (%)</label>
+          <span class="value-pill" id="automatablePill">75 %</span>
+        </div>
+        <input type="range" id="automatable" min="0" max="100" step="5" value="75">
+        <div class="hint">Toutes les tâches ne sont pas automatisables à 100 %. Un flux Power Automate bien conçu absorbe typiquement 60 à 85 % d'une tâche répétitive — le reste reste un point de contrôle humain.</div>
+      </div>
+    </section>
+
+    <aside class="card results-card">
+      <h2>Vos économies potentielles</h2>
+      <p class="sub">Estimation basée sur vos paramètres</p>
+
+      <div class="total-display">
+        <div class="label">Économies annuelles</div>
+        <div class="amount" id="totalAnnual">0 $</div>
+        <div class="period">temps libéré pour des activités à plus forte valeur</div>
+      </div>
+
+      <div class="time-badge" id="timeBadge">
+        <div class="star-icon">⏱</div>
+        <div class="text">
+          <div class="title">Temps libéré</div>
+          <div class="desc" id="timeDesc">0 heures par an libérées de ces tâches répétitives.</div>
+        </div>
+      </div>
+
+      <div class="breakdown">
+        <div class="breakdown-item">
+          <span class="name">Heures totales perdues / an</span>
+          <span class="amt" id="totalHoursAmt">— h</span>
+        </div>
+        <div class="breakdown-item warn">
+          <span class="name">Coût total de ces heures</span>
+          <span class="amt" id="grossCostAmt">— $</span>
+        </div>
+      </div>
+
+      <div class="horizon">
+        <div class="label">Sur un horizon de 3 ans</div>
+        <div class="amount" id="threeYear">0 $</div>
+      </div>
+
+      <a class="cta" href="https://lecfomasque.com/ref/107/" target="_blank" rel="noopener">
+        Maîtriser Power Automate — Voir les formations <span class="arrow">→</span>
+      </a>
+      <p class="cta-sub">Un flux bien conçu se rentabilise dès le premier trimestre.</p>
+    </aside>
+
+  </div>
+
+  <section class="insights">
+    <h2>Pourquoi ces heures restent invisibles</h2>
+    <p class="sub-h2">Personne ne facture « tâche répétitive » — pourtant la note s'accumule, semaine après semaine, sur toute l'équipe.</p>
+
+    <div class="insight-grid">
+      <div class="insight">
+        <div class="num">×</div>
+        <h3>L'effet multiplicateur passe sous le radar</h3>
+        <p>30 minutes par jour, c'est rien. Mais 30 min × 10 personnes × 5 jours × 48 semaines = 1 200 heures par an. Soit l'équivalent de plus d'un demi-poste à plein temps qu'on paye pour faire du copier-coller.</p>
+      </div>
+      <div class="insight">
+        <div class="num">↗</div>
+        <h3>Le temps libéré vaut plus que le temps gagné</h3>
+        <p>Une comptable libérée du classement de factures peut faire de l'analyse. Une commerciale libérée des courriels standards peut faire des relances. La valeur d'une heure libérée est souvent 2 à 3 fois supérieure à son coût.</p>
+      </div>
+      <div class="insight">
+        <div class="num">😴</div>
+        <h3>Les tâches répétitives démotivent</h3>
+        <p>Selon Gartner, les tâches répétitives sont la première cause de désengagement chez les employés administratifs. Le coût d'un départ — recrutement, formation, productivité — dépasse souvent 6 mois de salaire.</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="footer-note">
+    <strong>Le CFO masqué</strong> — Formations Excel, Power BI et Power Automate pour analystes, contrôleurs de gestion et CPA.<br>
+    Plus de 26 000 apprenants formés. Certifications Qualiopi (France) et SOFEDUC (Québec).
+    <div class="footer-logos">
+      <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+      <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+    </div>
+  </p>
+</main>
+
+<script>
+  const fmt = new Intl.NumberFormat('fr-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 });
+  const fmtH = (h) => Math.round(h).toLocaleString('fr-CA') + ' h';
+
+  const els = {
+    people: document.getElementById('people'),
+    peoplePill: document.getElementById('peoplePill'),
+    hoursWasted: document.getElementById('hoursWasted'),
+    hoursWastedPill: document.getElementById('hoursWastedPill'),
+    rate: document.getElementById('rate'),
+    ratePill: document.getElementById('ratePill'),
+    weeks: document.getElementById('weeks'),
+    weeksPill: document.getElementById('weeksPill'),
+    automatable: document.getElementById('automatable'),
+    automatablePill: document.getElementById('automatablePill'),
+    timeBadge: document.getElementById('timeBadge'),
+    timeDesc: document.getElementById('timeDesc'),
+  };
+
+  function recalc() {
+    const people = parseFloat(els.people.value);
+    const hoursWasted = parseFloat(els.hoursWasted.value);
+    const rate = parseFloat(els.rate.value);
+    const weeks = parseFloat(els.weeks.value);
+    const automatable = parseFloat(els.automatable.value) / 100;
+
+    els.peoplePill.textContent = `${people}`;
+    els.hoursWastedPill.textContent = `${hoursWasted} h`;
+    els.ratePill.textContent = `${rate} $/h`;
+    els.weeksPill.textContent = `${weeks}`;
+    els.automatablePill.textContent = `${(automatable * 100).toFixed(0)} %`;
+
+    const totalHours = people * hoursWasted * weeks;
+    const grossCost = totalHours * rate;
+    const savedHours = totalHours * automatable;
+    const savedCost = grossCost * automatable;
+    const threeYear = savedCost * 3;
+
+    document.getElementById('totalHoursAmt').textContent = fmtH(totalHours);
+    setVal('grossCostAmt', grossCost);
+    setVal('totalAnnual', savedCost, true);
+    setVal('threeYear', threeYear);
+
+    if (people > 0 && hoursWasted > 0 && automatable > 0) {
+      els.timeBadge.style.display = 'flex';
+      els.timeDesc.textContent = `${Math.round(savedHours).toLocaleString('fr-CA')} heures par an libérées des tâches répétitives — soit ${(savedHours / 1800).toFixed(1)} ETP qui peut désormais se consacrer à autre chose.`;
+    } else {
+      els.timeBadge.style.display = 'none';
+    }
+  }
+
+  function setVal(id, num, animate) {
+    const el = document.getElementById(id);
+    el.textContent = fmt.format(num);
+    if (animate) {
+      el.classList.remove('pulse');
+      void el.offsetWidth;
+      el.classList.add('pulse');
+    }
+  }
+
+  Object.values(els).forEach(el => {
+    if (el && (el.tagName === 'INPUT' || el.tagName === 'SELECT')) {
+      el.addEventListener('input', recalc);
+      el.addEventListener('change', recalc);
+    }
+  });
+
+  recalc();
+</script>
+
+</body>
+</html>

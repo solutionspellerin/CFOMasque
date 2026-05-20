@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Combien vous coûtent les erreurs et rapports manuels ? | Le CFO masqué</title>
+<style>
+  :root {
+    --navy: #0f1e3d;
+    --navy-2: #1a2d52;
+    --navy-3: #243a66;
+    --teal: #1fb8a6;
+    --teal-dark: #189a8b;
+    --automate: #2563eb;
+    --automate-dark: #1d4ed8;
+    --automate-light: #60a5fa;
+    --gold: #f5b945;
+    --gold-dark: #e0a32f;
+    --green: #10b981;
+    --green-dark: #059669;
+    --red: #e94e4e;
+    --red-soft: #ff6b6b;
+    --bg: #f6f8fc;
+    --card: #ffffff;
+    --text: #1a2640;
+    --muted: #6b7895;
+    --line: #e3e8f2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .brandbar { background: #fff; border-bottom: 1px solid var(--line); padding: 18px 24px; }
+  .brandbar-inner {
+    max-width: 1180px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap;
+  }
+  .brandbar img { display: block; max-height: 56px; width: auto; }
+  .brandbar .partner-label {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px;
+    color: var(--muted); font-weight: 600; text-align: center; flex: 1;
+  }
+  .brandbar .partner-label span {
+    display: block; color: var(--navy); font-size: 11px;
+    margin-top: 2px; letter-spacing: 0.8px;
+  }
+  @media (max-width: 700px) {
+    .brandbar-inner { justify-content: center; }
+    .brandbar .partner-label { flex: 0 0 100%; order: -1; margin-bottom: 4px; }
+    .brandbar img { max-height: 44px; }
+  }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--automate-light); text-decoration: none; font-weight: 600;
+    font-size: 13px; margin-bottom: 14px; opacity: 0.9;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .back-link:hover { opacity: 1; transform: translateX(-2px); }
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+    color: #fff; padding: 48px 24px 80px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(37,99,235,0.22) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -150px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(245,185,69,0.10) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+  .badge {
+    display: inline-block; background: rgba(37,99,235,0.22);
+    color: var(--automate-light); padding: 6px 14px; border-radius: 100px;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase; border: 1px solid rgba(96,165,250,0.4);
+  }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; }
+  .tool-chip {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(255,255,255,0.97); padding: 6px 16px 6px 8px;
+    border-radius: 100px; font-weight: 700; color: var(--navy);
+    font-size: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  }
+  .tool-chip img { height: 24px; width: auto; display: block; }
+  h1 {
+    font-size: clamp(28px, 4vw, 44px); line-height: 1.15; font-weight: 800;
+    margin-bottom: 16px; letter-spacing: -0.5px;
+  }
+  h1 .accent { color: var(--automate-light); }
+  h1 .strike { color: var(--red-soft); }
+  .hero p.lead { font-size: 18px; color: rgba(255,255,255,0.82); max-width: 720px; }
+  .main { max-width: 1180px; margin: -50px auto 0; padding: 0 24px 80px; position: relative; z-index: 2; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card); border-radius: 16px; padding: 32px;
+    box-shadow: 0 12px 40px rgba(15,30,61,0.08); border: 1px solid var(--line);
+  }
+  .card h2 { font-size: 20px; margin-bottom: 6px; color: var(--navy); font-weight: 700; }
+  .card .sub { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .field { margin-bottom: 22px; }
+  .field-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .field label { font-size: 14px; font-weight: 600; color: var(--text); }
+  .field .value-pill {
+    background: var(--navy); color: #fff; padding: 4px 12px;
+    border-radius: 100px; font-size: 13px; font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .field .hint { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+  .section-title {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px;
+    color: var(--automate-dark); font-weight: 700;
+    margin: 28px 0 14px; padding-bottom: 8px; border-bottom: 2px solid var(--line);
+  }
+  .section-title:first-of-type { margin-top: 0; }
+  input[type="range"] {
+    width: 100%; -webkit-appearance: none; appearance: none;
+    height: 6px; background: var(--line); border-radius: 100px; outline: none; margin-top: 4px;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--automate); cursor: pointer; border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.45); transition: transform 0.1s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--automate); cursor: pointer; border: 3px solid #fff;
+  }
+  .demo-banner {
+    background: linear-gradient(135deg, rgba(37,99,235,0.10), rgba(37,99,235,0.02));
+    border: 1px solid rgba(37,99,235,0.28); border-radius: 12px;
+    padding: 14px 16px; margin-bottom: 24px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .demo-banner .icon {
+    background: var(--automate); color: #fff; width: 28px; height: 28px;
+    border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px;
+  }
+  .demo-banner .text { font-size: 13px; color: var(--text); }
+  .demo-banner .text strong { color: var(--navy); }
+  .results-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff; border: none;
+    position: sticky; top: 20px; align-self: start;
+  }
+  .results-card h2 { color: #fff; }
+  .results-card .sub { color: rgba(255,255,255,0.65); }
+  .total-display {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 24px; text-align: center; margin-bottom: 22px;
+  }
+  .total-display .label {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--automate-light); font-weight: 700; margin-bottom: 8px;
+  }
+  .total-display .amount {
+    font-size: clamp(36px, 6vw, 54px); font-weight: 800; color: var(--red-soft);
+    letter-spacing: -1px; font-variant-numeric: tabular-nums; line-height: 1;
+  }
+  .total-display .period { color: rgba(255,255,255,0.7); font-size: 14px; margin-top: 6px; }
+  .breakdown { display: grid; gap: 10px; margin-bottom: 22px; }
+  .breakdown-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 16px; background: rgba(255,255,255,0.04);
+    border-radius: 10px; border-left: 3px solid var(--automate-light);
+  }
+  .breakdown-item.warn { border-left-color: var(--gold); }
+  .breakdown-item .name { font-size: 14px; color: rgba(255,255,255,0.9); }
+  .breakdown-item .amt {
+    font-weight: 700; font-size: 16px; color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  .quality-badge {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    border-radius: 12px; padding: 18px;
+    margin-bottom: 22px; display: flex; gap: 14px; align-items: center;
+    box-shadow: 0 8px 24px rgba(245,185,69,0.32);
+  }
+  .quality-badge .star-icon {
+    background: rgba(255,255,255,0.25); width: 44px; height: 44px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 22px; font-weight: 800; color: var(--navy);
+  }
+  .quality-badge .text { color: var(--navy); }
+  .quality-badge .text .title {
+    font-size: 13px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .quality-badge .text .desc { font-size: 13px; line-height: 1.4; }
+  .horizon {
+    background: rgba(233,78,78,0.10); border: 1px solid rgba(233,78,78,0.3);
+    border-radius: 12px; padding: 16px; margin-bottom: 24px; text-align: center;
+  }
+  .horizon .label {
+    font-size: 12px; color: rgba(255,255,255,0.7);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;
+  }
+  .horizon .amount {
+    font-size: 28px; font-weight: 800; color: var(--red-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  .cta {
+    display: block; text-align: center;
+    background: linear-gradient(135deg, var(--automate) 0%, var(--automate-dark) 100%);
+    color: #fff; text-decoration: none; padding: 18px 24px;
+    border-radius: 12px; font-weight: 800; font-size: 16px;
+    letter-spacing: 0.3px; transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 8px 24px rgba(37,99,235,0.35); margin-top: 8px;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(37,99,235,0.5); }
+  .cta .arrow { display: inline-block; margin-left: 6px; transition: transform 0.15s; }
+  .cta:hover .arrow { transform: translateX(4px); }
+  .cta-sub {
+    text-align: center; font-size: 13px;
+    color: rgba(255,255,255,0.65); margin-top: 12px;
+  }
+  .insights { margin-top: 60px; }
+  .insights h2 { text-align: center; font-size: 28px; color: var(--navy); margin-bottom: 8px; }
+  .insights .sub-h2 { text-align: center; color: var(--muted); margin-bottom: 36px; }
+  .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 800px) { .insight-grid { grid-template-columns: 1fr; } }
+  .insight { background: #fff; padding: 24px; border-radius: 14px; border: 1px solid var(--line); }
+  .insight .num { font-size: 32px; font-weight: 800; color: var(--automate-dark); margin-bottom: 6px; }
+  .insight h3 { font-size: 16px; color: var(--navy); margin-bottom: 8px; }
+  .insight p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .footer-note {
+    text-align: center; margin-top: 50px; padding-top: 30px;
+    border-top: 1px solid var(--line); color: var(--muted); font-size: 13px;
+  }
+  .footer-note strong { color: var(--navy); }
+  .footer-logos {
+    display: flex; align-items: center; justify-content: center;
+    gap: 32px; margin-top: 24px; flex-wrap: wrap;
+  }
+  .footer-logos img { max-height: 44px; width: auto; opacity: 0.9; }
+  .pulse { animation: pulse 0.4s ease; }
+  @keyframes pulse {
+    0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="brandbar">
+  <div class="brandbar-inner">
+    <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+    <div class="partner-label">Présenté par<span>en partenariat</span></div>
+    <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+  </div>
+</div>
+
+<header class="hero">
+  <div class="container">
+    <a class="back-link" href="index.html">← Tous les calculateurs</a>
+    <div class="badge-row">
+      <div class="tool-chip">
+        <img src="power-automate-logo.svg" alt="Microsoft Power Automate">
+        <span>Microsoft Power Automate</span>
+      </div>
+      <span class="badge">Qualité — Le CFO masqué</span>
+    </div>
+    <h1>Combien vous coûtent les <span class="strike">erreurs manuelles</span><br>
+    et les <span class="accent">rapports recompilés</span> chaque mois ?</h1>
+    <p class="lead">
+      Une facture transférée au mauvais service, un courriel oublié, un rapport hebdomadaire qu'on refait à la main
+      lundi matin. Chaque manipulation manuelle ouvre une porte à l'erreur, et chaque rapport recompilé prend des
+      heures qu'on pourrait passer ailleurs. Un flux Power Automate ne se trompe jamais, n'oublie rien, et peut
+      rafraîchir un modèle Power BI au passage.
+    </p>
+  </div>
+</header>
+
+<main class="main">
+  <div class="grid">
+
+    <section class="card">
+      <h2>Paramètres de votre situation</h2>
+      <p class="sub">Ajustez selon votre réalité. Les calculs se mettent à jour en direct.</p>
+
+      <div class="demo-banner">
+        <div class="icon">i</div>
+        <div class="text">
+          <strong>Exemple pré-rempli :</strong> 15 erreurs manuelles par mois (factures mal classées, courriels
+          oubliés, fichiers transmis au mauvais service), chacune coûtant en moyenne 200 $ à corriger. 8 rapports
+          recompilés à la main chaque mois, 2 heures par rapport, par un analyste à 65 $/h.
+        </div>
+      </div>
+
+      <h3 class="section-title">A. Erreurs manuelles évitables</h3>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="errors">Erreurs manuelles par mois</label>
+          <span class="value-pill" id="errorsPill">15</span>
+        </div>
+        <input type="range" id="errors" min="0" max="100" step="1" value="15">
+        <div class="hint">Factures mal classées, courriels non envoyés, dossiers transmis au mauvais service, oublis dans une procédure. Power Automate exécute toujours la même séquence, sans variation ni oubli.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="errorCost">Coût moyen d'une erreur ($)</label>
+          <span class="value-pill" id="errorCostPill">200 $</span>
+        </div>
+        <input type="range" id="errorCost" min="0" max="2000" step="25" value="200">
+        <div class="hint">Temps de correction + impact (retard de paiement, escompte perdu, irritation client, retraitement comptable, données à reconstituer).</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="errorsAutomatable">Part des erreurs évitables par automatisation (%)</label>
+          <span class="value-pill" id="errorsAutomatablePill">85 %</span>
+        </div>
+        <input type="range" id="errorsAutomatable" min="0" max="100" step="5" value="85">
+        <div class="hint">Les erreurs liées aux étapes répétitives disparaissent avec un flux automatisé. Les erreurs de jugement ou d'analyse, elles, demeurent — d'où une part typiquement de 70 à 90 %.</div>
+      </div>
+
+      <h3 class="section-title">B. Rapports recompilés à la main</h3>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="reports">Rapports recompilés à la main par mois</label>
+          <span class="value-pill" id="reportsPill">8</span>
+        </div>
+        <input type="range" id="reports" min="0" max="50" step="1" value="8">
+        <div class="hint">Tableaux de bord, suivis hebdomadaires, fichiers consolidés pour un comité. Power Automate peut rafraîchir un modèle sémantique Power BI et distribuer le rapport automatiquement.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="hoursPerReport">Heures par rapport</label>
+          <span class="value-pill" id="hoursPerReportPill">2 h</span>
+        </div>
+        <input type="range" id="hoursPerReport" min="0" max="20" step="0.5" value="2">
+        <div class="hint">Extraction, copier-coller, mise en forme, envoi. Une grande partie peut être éliminée par un flux Power Automate bien conçu.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="rate">Taux horaire chargé de la personne qui fait les rapports ($/h)</label>
+          <span class="value-pill" id="ratePill">65 $/h</span>
+        </div>
+        <input type="range" id="rate" min="30" max="200" step="1" value="65">
+        <div class="hint">Salaire chargé moyen d'un analyste, contrôleur ou gestionnaire qui consacre du temps à ces rapports.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="reportsAutomatable">Part automatisable des rapports (%)</label>
+          <span class="value-pill" id="reportsAutomatablePill">85 %</span>
+        </div>
+        <input type="range" id="reportsAutomatable" min="0" max="100" step="5" value="85">
+        <div class="hint">L'extraction, la mise en forme et la distribution sont automatisables. La lecture et le commentaire restent humains — d'où une part typiquement de 75 à 90 %.</div>
+      </div>
+    </section>
+
+    <aside class="card results-card">
+      <h2>Vos économies potentielles</h2>
+      <p class="sub">Estimation basée sur vos paramètres</p>
+
+      <div class="total-display">
+        <div class="label">Économies annuelles</div>
+        <div class="amount" id="totalAnnual">0 $</div>
+        <div class="period">erreurs évitées + heures de reporting libérées</div>
+      </div>
+
+      <div class="quality-badge" id="qualityBadge">
+        <div class="star-icon">✓</div>
+        <div class="text">
+          <div class="title">Rigueur + traçabilité</div>
+          <div class="desc" id="qualityDesc">Aucune erreur de saisie, aucune étape oubliée. Chaque action est tracée et auditable.</div>
+        </div>
+      </div>
+
+      <div class="breakdown">
+        <div class="breakdown-item">
+          <span class="name">Erreurs manuelles évitées</span>
+          <span class="amt" id="errorsSavedAmt">— $</span>
+        </div>
+        <div class="breakdown-item warn">
+          <span class="name">Heures de reporting libérées</span>
+          <span class="amt" id="reportsSavedAmt">— $</span>
+        </div>
+      </div>
+
+      <div class="horizon">
+        <div class="label">Sur un horizon de 3 ans</div>
+        <div class="amount" id="threeYear">0 $</div>
+      </div>
+
+      <a class="cta" href="https://lecfomasque.com/ref/107/" target="_blank" rel="noopener">
+        Maîtriser Power Automate — Voir les formations <span class="arrow">→</span>
+      </a>
+      <p class="cta-sub">Un flux Power Automate branché sur Power BI offre une visibilité temps réel sans intervention.</p>
+    </aside>
+
+  </div>
+
+  <section class="insights">
+    <h2>Pourquoi ces coûts restent invisibles</h2>
+    <p class="sub-h2">Une erreur évitée ne reçoit pas de prime — pourtant chaque erreur évitée, c'est de l'argent qui reste dans l'entreprise.</p>
+
+    <div class="insight-grid">
+      <div class="insight">
+        <div class="num">⚠</div>
+        <h3>Une erreur manuelle en cache cinq</h3>
+        <p>Pour chaque erreur découverte, plusieurs autres passent inaperçues — mauvais codage comptable, escompte raté, doublon dans une facturation. Le coût visible n'est que la pointe de l'iceberg.</p>
+      </div>
+      <div class="insight">
+        <div class="num">📊</div>
+        <h3>Power Automate + Power BI = visibilité temps réel</h3>
+        <p>Un flux Power Automate peut rafraîchir un modèle sémantique Power BI à chaque événement, distribuer le rapport, alerter en cas d'anomalie. Les rapports « du lundi matin » deviennent des tableaux de bord toujours à jour.</p>
+      </div>
+      <div class="insight">
+        <div class="num">📝</div>
+        <h3>La traçabilité change la conversation avec les auditeurs</h3>
+        <p>Chaque action d'un flux Power Automate est journalisée : qui, quoi, quand, avec quels paramètres. En cas d'audit ou de litige, la piste est complète — fini les reconstitutions à partir de courriels et de fichiers Excel disparates.</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="footer-note">
+    <strong>Le CFO masqué</strong> — Formations Excel, Power BI et Power Automate pour analystes, contrôleurs de gestion et CPA.<br>
+    Plus de 26 000 apprenants formés. Certifications Qualiopi (France) et SOFEDUC (Québec).
+    <div class="footer-logos">
+      <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+      <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+    </div>
+  </p>
+</main>
+
+<script>
+  const fmt = new Intl.NumberFormat('fr-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 });
+
+  const els = {
+    errors: document.getElementById('errors'),
+    errorsPill: document.getElementById('errorsPill'),
+    errorCost: document.getElementById('errorCost'),
+    errorCostPill: document.getElementById('errorCostPill'),
+    errorsAutomatable: document.getElementById('errorsAutomatable'),
+    errorsAutomatablePill: document.getElementById('errorsAutomatablePill'),
+    reports: document.getElementById('reports'),
+    reportsPill: document.getElementById('reportsPill'),
+    hoursPerReport: document.getElementById('hoursPerReport'),
+    hoursPerReportPill: document.getElementById('hoursPerReportPill'),
+    rate: document.getElementById('rate'),
+    ratePill: document.getElementById('ratePill'),
+    reportsAutomatable: document.getElementById('reportsAutomatable'),
+    reportsAutomatablePill: document.getElementById('reportsAutomatablePill'),
+    qualityBadge: document.getElementById('qualityBadge'),
+    qualityDesc: document.getElementById('qualityDesc'),
+  };
+
+  function recalc() {
+    const errors = parseFloat(els.errors.value);
+    const errCost = parseFloat(els.errorCost.value);
+    const errAuto = parseFloat(els.errorsAutomatable.value) / 100;
+    const reports = parseFloat(els.reports.value);
+    const hoursPerReport = parseFloat(els.hoursPerReport.value);
+    const rate = parseFloat(els.rate.value);
+    const repAuto = parseFloat(els.reportsAutomatable.value) / 100;
+
+    els.errorsPill.textContent = `${errors}`;
+    els.errorCostPill.textContent = fmt.format(errCost);
+    els.errorsAutomatablePill.textContent = `${(errAuto * 100).toFixed(0)} %`;
+    els.reportsPill.textContent = `${reports}`;
+    els.hoursPerReportPill.textContent = `${hoursPerReport} h`;
+    els.ratePill.textContent = `${rate} $/h`;
+    els.reportsAutomatablePill.textContent = `${(repAuto * 100).toFixed(0)} %`;
+
+    const errorsSaved = errors * 12 * errCost * errAuto;
+    const reportsSaved = reports * 12 * hoursPerReport * rate * repAuto;
+    const totalAnnual = errorsSaved + reportsSaved;
+    const threeYear = totalAnnual * 3;
+
+    setVal('errorsSavedAmt', errorsSaved);
+    setVal('reportsSavedAmt', reportsSaved);
+    setVal('totalAnnual', totalAnnual, true);
+    setVal('threeYear', threeYear);
+
+    const totalErrors = Math.round(errors * 12 * errAuto);
+    const totalHours = Math.round(reports * 12 * hoursPerReport * repAuto);
+    if (totalAnnual > 0) {
+      els.qualityBadge.style.display = 'flex';
+      els.qualityDesc.textContent = `~${totalErrors.toLocaleString('fr-CA')} erreur${totalErrors > 1 ? 's' : ''} évitée${totalErrors > 1 ? 's' : ''} et ${totalHours.toLocaleString('fr-CA')} heure${totalHours > 1 ? 's' : ''} de reporting libérée${totalHours > 1 ? 's' : ''} par année — avec traçabilité complète.`;
+    } else {
+      els.qualityBadge.style.display = 'none';
+    }
+  }
+
+  function setVal(id, num, animate) {
+    const el = document.getElementById(id);
+    el.textContent = fmt.format(num);
+    if (animate) {
+      el.classList.remove('pulse');
+      void el.offsetWidth;
+      el.classList.add('pulse');
+    }
+  }
+
+  Object.values(els).forEach(el => {
+    if (el && (el.tagName === 'INPUT' || el.tagName === 'SELECT')) {
+      el.addEventListener('input', recalc);
+      el.addEventListener('change', recalc);
+    }
+  });
+
+  recalc();
+</script>
+
+</body>
+</html>

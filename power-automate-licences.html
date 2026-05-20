@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Combien vous coûtent les licences fantômes ? | Le CFO masqué</title>
+<style>
+  :root {
+    --navy: #0f1e3d;
+    --navy-2: #1a2d52;
+    --navy-3: #243a66;
+    --teal: #1fb8a6;
+    --teal-dark: #189a8b;
+    --automate: #2563eb;
+    --automate-dark: #1d4ed8;
+    --automate-light: #60a5fa;
+    --green: #10b981;
+    --green-dark: #059669;
+    --red: #e94e4e;
+    --red-soft: #ff6b6b;
+    --bg: #f6f8fc;
+    --card: #ffffff;
+    --text: #1a2640;
+    --muted: #6b7895;
+    --line: #e3e8f2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .brandbar { background: #fff; border-bottom: 1px solid var(--line); padding: 18px 24px; }
+  .brandbar-inner {
+    max-width: 1180px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap;
+  }
+  .brandbar img { display: block; max-height: 56px; width: auto; }
+  .brandbar .partner-label {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px;
+    color: var(--muted); font-weight: 600; text-align: center; flex: 1;
+  }
+  .brandbar .partner-label span {
+    display: block; color: var(--navy); font-size: 11px;
+    margin-top: 2px; letter-spacing: 0.8px;
+  }
+  @media (max-width: 700px) {
+    .brandbar-inner { justify-content: center; }
+    .brandbar .partner-label { flex: 0 0 100%; order: -1; margin-bottom: 4px; }
+    .brandbar img { max-height: 44px; }
+  }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--automate-light); text-decoration: none; font-weight: 600;
+    font-size: 13px; margin-bottom: 14px; opacity: 0.9;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .back-link:hover { opacity: 1; transform: translateX(-2px); }
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-3) 100%);
+    color: #fff; padding: 48px 24px 80px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(37,99,235,0.22) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -150px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(16,185,129,0.10) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+  .badge {
+    display: inline-block; background: rgba(37,99,235,0.22);
+    color: var(--automate-light); padding: 6px 14px; border-radius: 100px;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase; border: 1px solid rgba(96,165,250,0.4);
+  }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; }
+  .tool-chip {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(255,255,255,0.97); padding: 6px 16px 6px 8px;
+    border-radius: 100px; font-weight: 700; color: var(--navy);
+    font-size: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  }
+  .tool-chip img { height: 24px; width: auto; display: block; }
+  h1 {
+    font-size: clamp(28px, 4vw, 44px); line-height: 1.15; font-weight: 800;
+    margin-bottom: 16px; letter-spacing: -0.5px;
+  }
+  h1 .accent { color: var(--automate-light); }
+  h1 .strike { color: var(--red-soft); }
+  .hero p.lead { font-size: 18px; color: rgba(255,255,255,0.82); max-width: 720px; }
+  .main { max-width: 1180px; margin: -50px auto 0; padding: 0 24px 80px; position: relative; z-index: 2; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card); border-radius: 16px; padding: 32px;
+    box-shadow: 0 12px 40px rgba(15,30,61,0.08); border: 1px solid var(--line);
+  }
+  .card h2 { font-size: 20px; margin-bottom: 6px; color: var(--navy); font-weight: 700; }
+  .card .sub { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .field { margin-bottom: 22px; }
+  .field-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .field label { font-size: 14px; font-weight: 600; color: var(--text); }
+  .field .value-pill {
+    background: var(--navy); color: #fff; padding: 4px 12px;
+    border-radius: 100px; font-size: 13px; font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .field .hint { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+  input[type="range"] {
+    width: 100%; -webkit-appearance: none; appearance: none;
+    height: 6px; background: var(--line); border-radius: 100px; outline: none; margin-top: 4px;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--automate); cursor: pointer; border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.45); transition: transform 0.1s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--automate); cursor: pointer; border: 3px solid #fff;
+  }
+  .demo-banner {
+    background: linear-gradient(135deg, rgba(37,99,235,0.10), rgba(37,99,235,0.02));
+    border: 1px solid rgba(37,99,235,0.28); border-radius: 12px;
+    padding: 14px 16px; margin-bottom: 24px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .demo-banner .icon {
+    background: var(--automate); color: #fff; width: 28px; height: 28px;
+    border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px;
+  }
+  .demo-banner .text { font-size: 13px; color: var(--text); }
+  .demo-banner .text strong { color: var(--navy); }
+  .results-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff; border: none;
+    position: sticky; top: 20px; align-self: start;
+  }
+  .results-card h2 { color: #fff; }
+  .results-card .sub { color: rgba(255,255,255,0.65); }
+  .total-display {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 24px; text-align: center; margin-bottom: 22px;
+  }
+  .total-display .label {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--automate-light); font-weight: 700; margin-bottom: 8px;
+  }
+  .total-display .amount {
+    font-size: clamp(36px, 6vw, 54px); font-weight: 800; color: var(--red-soft);
+    letter-spacing: -1px; font-variant-numeric: tabular-nums; line-height: 1;
+  }
+  .total-display .period { color: rgba(255,255,255,0.7); font-size: 14px; margin-top: 6px; }
+  .breakdown { display: grid; gap: 10px; margin-bottom: 22px; }
+  .breakdown-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 16px; background: rgba(255,255,255,0.04);
+    border-radius: 10px; border-left: 3px solid var(--automate-light);
+  }
+  .breakdown-item.danger { border-left-color: var(--red); }
+  .breakdown-item .name { font-size: 14px; color: rgba(255,255,255,0.9); }
+  .breakdown-item .amt {
+    font-weight: 700; font-size: 16px; color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  .security-badge {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+    border-radius: 12px; padding: 18px;
+    margin-bottom: 22px; display: flex; gap: 14px; align-items: center;
+    box-shadow: 0 8px 24px rgba(16,185,129,0.28);
+  }
+  .security-badge .star-icon {
+    background: rgba(255,255,255,0.2); width: 44px; height: 44px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 22px; font-weight: 800; color: #fff;
+  }
+  .security-badge .text { color: #fff; }
+  .security-badge .text .title {
+    font-size: 13px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .security-badge .text .desc { font-size: 13px; line-height: 1.4; opacity: 0.95; }
+  .horizon {
+    background: rgba(233,78,78,0.10); border: 1px solid rgba(233,78,78,0.3);
+    border-radius: 12px; padding: 16px; margin-bottom: 24px; text-align: center;
+  }
+  .horizon .label {
+    font-size: 12px; color: rgba(255,255,255,0.7);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;
+  }
+  .horizon .amount {
+    font-size: 28px; font-weight: 800; color: var(--red-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  .cta {
+    display: block; text-align: center;
+    background: linear-gradient(135deg, var(--automate) 0%, var(--automate-dark) 100%);
+    color: #fff; text-decoration: none; padding: 18px 24px;
+    border-radius: 12px; font-weight: 800; font-size: 16px;
+    letter-spacing: 0.3px; transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 8px 24px rgba(37,99,235,0.35); margin-top: 8px;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(37,99,235,0.5); }
+  .cta .arrow { display: inline-block; margin-left: 6px; transition: transform 0.15s; }
+  .cta:hover .arrow { transform: translateX(4px); }
+  .cta-sub {
+    text-align: center; font-size: 13px;
+    color: rgba(255,255,255,0.65); margin-top: 12px;
+  }
+  .insights { margin-top: 60px; }
+  .insights h2 { text-align: center; font-size: 28px; color: var(--navy); margin-bottom: 8px; }
+  .insights .sub-h2 { text-align: center; color: var(--muted); margin-bottom: 36px; }
+  .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 800px) { .insight-grid { grid-template-columns: 1fr; } }
+  .insight { background: #fff; padding: 24px; border-radius: 14px; border: 1px solid var(--line); }
+  .insight .num { font-size: 32px; font-weight: 800; color: var(--automate-dark); margin-bottom: 6px; }
+  .insight h3 { font-size: 16px; color: var(--navy); margin-bottom: 8px; }
+  .insight p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .footer-note {
+    text-align: center; margin-top: 50px; padding-top: 30px;
+    border-top: 1px solid var(--line); color: var(--muted); font-size: 13px;
+  }
+  .footer-note strong { color: var(--navy); }
+  .footer-logos {
+    display: flex; align-items: center; justify-content: center;
+    gap: 32px; margin-top: 24px; flex-wrap: wrap;
+  }
+  .footer-logos img { max-height: 44px; width: auto; opacity: 0.9; }
+  .pulse { animation: pulse 0.4s ease; }
+  @keyframes pulse {
+    0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="brandbar">
+  <div class="brandbar-inner">
+    <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+    <div class="partner-label">Présenté par<span>en partenariat</span></div>
+    <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+  </div>
+</div>
+
+<header class="hero">
+  <div class="container">
+    <a class="back-link" href="index.html">← Tous les calculateurs</a>
+    <div class="badge-row">
+      <div class="tool-chip">
+        <img src="power-automate-logo.svg" alt="Microsoft Power Automate">
+        <span>Microsoft Power Automate</span>
+      </div>
+      <span class="badge">Sécurité — Le CFO masqué</span>
+    </div>
+    <h1>Combien vous coûtent les <span class="strike">licences fantômes</span><br>
+    après un <span class="accent">départ d'employé</span> ?</h1>
+    <p class="lead">
+      Un employé est parti il y a 6 mois, mais son compte M365 est encore actif. Sans intégration entre le SIRH et
+      les systèmes TI, l'information du départ ne se rend jamais — et les licences continuent d'être facturées
+      pendant des mois. Mettez un chiffre sur ce gaspillage et sur le risque de sécurité qui l'accompagne.
+    </p>
+  </div>
+</header>
+
+<main class="main">
+  <div class="grid">
+
+    <section class="card">
+      <h2>Paramètres de votre situation</h2>
+      <p class="sub">Ajustez selon votre réalité. Les calculs se mettent à jour en direct.</p>
+
+      <div class="demo-banner">
+        <div class="icon">i</div>
+        <div class="text">
+          <strong>Exemple pré-rempli :</strong> PME de 80 employés. 12 départs par an, dont les licences continuent
+          d'être facturées en moyenne 6 mois faute d'avis systématique au département TI. Chaque employé utilise
+          5 licences SaaS (M365, CRM, outils métiers) à environ 35 $/mois.
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="departures">Départs d'employés par année</label>
+          <span class="value-pill" id="departuresPill">12</span>
+        </div>
+        <input type="range" id="departures" min="0" max="100" step="1" value="12">
+        <div class="hint">Démissions, fins de contrat, mutations. Le SIRH connaît ces départs en premier — Power Automate peut déclencher la fermeture des accès au même moment.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="monthsActive">Durée moyenne pendant laquelle les licences continuent d'être payées après un départ (mois)</label>
+          <span class="value-pill" id="monthsActivePill">6 mois</span>
+        </div>
+        <input type="range" id="monthsActive" min="0" max="24" step="0.5" value="6">
+        <div class="hint">Sans intégration SIRH ↔ TI, les départs ne sont pas systématiquement transmis. Résultat : des licences continuent d'être facturées pour des employés qui ne sont plus là — souvent jusqu'à un audit ou un nettoyage de comptes.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="licenses">Licences SaaS par employé</label>
+          <span class="value-pill" id="licensesPill">5</span>
+        </div>
+        <input type="range" id="licenses" min="1" max="20" step="1" value="5">
+        <div class="hint">M365, CRM, ERP, outils métiers, outils de signature, etc. Chaque licence non révoquée continue d'être facturée chaque mois.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="licenseCost">Coût mensuel moyen d'une licence ($)</label>
+          <span class="value-pill" id="licenseCostPill">35 $</span>
+        </div>
+        <input type="range" id="licenseCost" min="5" max="200" step="5" value="35">
+        <div class="hint">Coût moyen toutes plateformes confondues. Certaines licences spécialisées dépassent 100 $/mois.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="incidentCost">Coût estimé d'un incident d'accès orphelin ($)</label>
+          <span class="value-pill" id="incidentCostPill">80 000 $</span>
+        </div>
+        <input type="range" id="incidentCost" min="0" max="500000" step="5000" value="80000">
+        <div class="hint">Fuite de données par un ancien employé, fraude, sanctions réglementaires, perte de réputation. Souvent largement sous-estimé — et tant que l'accès reste ouvert, le risque court.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">
+          <label for="incidentProb">Probabilité annuelle d'un tel incident (%)</label>
+          <span class="value-pill" id="incidentProbPill">4 %</span>
+        </div>
+        <input type="range" id="incidentProb" min="0" max="30" step="0.5" value="4">
+        <div class="hint">Probabilité qu'un accès orphelin soit exploité dans l'année. Avec Power Automate branché sur le SIRH, ce risque tombe à quasi-zéro.</div>
+      </div>
+    </section>
+
+    <aside class="card results-card">
+      <h2>Votre coût annuel caché</h2>
+      <p class="sub">Estimation basée sur vos paramètres</p>
+
+      <div class="total-display">
+        <div class="label">Coût annuel total</div>
+        <div class="amount" id="totalAnnual">0 $</div>
+        <div class="period">licences gaspillées et risque sécurité</div>
+      </div>
+
+      <div class="security-badge" id="securityBadge">
+        <div class="star-icon">★</div>
+        <div class="text">
+          <div class="title">Bravo pour la sécurité !</div>
+          <div class="desc" id="securityDesc">Chaque départ déclenche la fermeture automatique des accès dès sa saisie dans le SIRH.</div>
+        </div>
+      </div>
+
+      <div class="breakdown">
+        <div class="breakdown-item">
+          <span class="name">Licences SaaS payées dans le vide</span>
+          <span class="amt" id="licenseWasteAmt">— $</span>
+        </div>
+        <div class="breakdown-item danger">
+          <span class="name">Risque d'incident d'accès orphelin</span>
+          <span class="amt" id="securityRiskAmt">— $</span>
+        </div>
+      </div>
+
+      <div class="horizon">
+        <div class="label">Sur un horizon de 3 ans</div>
+        <div class="amount" id="threeYear">0 $</div>
+      </div>
+
+      <a class="cta" href="https://lecfomasque.com/ref/107/" target="_blank" rel="noopener">
+        Maîtriser Power Automate — Voir les formations <span class="arrow">→</span>
+      </a>
+      <p class="cta-sub">Un flux Power Automate bien conçu se rentabilise dès la première année.</p>
+    </aside>
+
+  </div>
+
+  <section class="insights">
+    <h2>Pourquoi les licences fantômes restent invisibles</h2>
+    <p class="sub-h2">Personne n'envoie de facture intitulée « ex-employé encore connecté » — pourtant la note s'accumule chaque mois.</p>
+
+    <div class="insight-grid">
+      <div class="insight">
+        <div class="num">🔄</div>
+        <h3>Le SIRH connaît les départs, les TI ne sont pas toujours avisés</h3>
+        <p>Le formulaire de départ existe — mais l'information voyage par courriel, dans une réunion RH, ou pas du tout. Power Automate branché sur le SIRH ferme automatiquement les accès au moment exact du départ.</p>
+      </div>
+      <div class="insight">
+        <div class="num">💸</div>
+        <h3>Une licence active = une facture chaque mois</h3>
+        <p>Une licence M365 à 25 $/mois oubliée pendant 6 mois, c'est 150 $. Multipliez par 4 ou 5 licences par employé, et par 10-20 départs par an — la facture monte vite.</p>
+      </div>
+      <div class="insight">
+        <div class="num">🛡</div>
+        <h3>Un accès oublié = une porte ouverte</h3>
+        <p>Un compte M365 actif d'un ex-employé est une cible idéale : moins surveillé, droits encore en place, mots de passe rarement renouvelés. La fermeture automatique réduit drastiquement ce risque.</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="footer-note">
+    <strong>Le CFO masqué</strong> — Formations Excel, Power BI et Power Automate pour analystes, contrôleurs de gestion et CPA.<br>
+    Plus de 26 000 apprenants formés. Certifications Qualiopi (France) et SOFEDUC (Québec).
+    <div class="footer-logos">
+      <img src="solutions-pellerin.png" alt="Solutions Pellerin">
+      <img src="cfo-masque-logo.png" alt="Le CFO masqué">
+    </div>
+  </p>
+</main>
+
+<script>
+  const fmt = new Intl.NumberFormat('fr-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 });
+
+  const els = {
+    departures: document.getElementById('departures'),
+    departuresPill: document.getElementById('departuresPill'),
+    monthsActive: document.getElementById('monthsActive'),
+    monthsActivePill: document.getElementById('monthsActivePill'),
+    licenses: document.getElementById('licenses'),
+    licensesPill: document.getElementById('licensesPill'),
+    licenseCost: document.getElementById('licenseCost'),
+    licenseCostPill: document.getElementById('licenseCostPill'),
+    incidentCost: document.getElementById('incidentCost'),
+    incidentCostPill: document.getElementById('incidentCostPill'),
+    incidentProb: document.getElementById('incidentProb'),
+    incidentProbPill: document.getElementById('incidentProbPill'),
+    securityBadge: document.getElementById('securityBadge'),
+    securityDesc: document.getElementById('securityDesc'),
+  };
+
+  function recalc() {
+    const dep = parseFloat(els.departures.value);
+    const monthsActive = parseFloat(els.monthsActive.value);
+    const lic = parseFloat(els.licenses.value);
+    const licCost = parseFloat(els.licenseCost.value);
+    const incCost = parseFloat(els.incidentCost.value);
+    const incProb = parseFloat(els.incidentProb.value) / 100;
+
+    els.departuresPill.textContent = `${dep}`;
+    els.monthsActivePill.textContent = `${monthsActive % 1 === 0 ? monthsActive : monthsActive.toFixed(1)} mois`;
+    els.licensesPill.textContent = `${lic}`;
+    els.licenseCostPill.textContent = fmt.format(licCost);
+    els.incidentCostPill.textContent = fmt.format(incCost);
+    els.incidentProbPill.textContent = `${incProb * 100 % 1 === 0 ? (incProb * 100).toFixed(0) : (incProb * 100).toFixed(1)} %`;
+
+    const licenseWaste = dep * monthsActive * lic * licCost;
+    const securityRiskSaved = incCost * incProb * 0.95;
+    const totalAnnual = licenseWaste + securityRiskSaved;
+    const threeYear = totalAnnual * 3;
+
+    setVal('licenseWasteAmt', licenseWaste);
+    setVal('securityRiskAmt', securityRiskSaved);
+    setVal('totalAnnual', totalAnnual, true);
+    setVal('threeYear', threeYear);
+
+    if (dep > 0) {
+      els.securityBadge.style.display = 'flex';
+      const ghostLicenses = Math.round(dep * monthsActive * lic);
+      els.securityDesc.textContent = `${dep} départ${dep > 1 ? 's' : ''}/an traité${dep > 1 ? 's' : ''} automatiquement. Fini les ~${ghostLicenses.toLocaleString('fr-CA')} mois-licences fantômes par année.`;
+    } else {
+      els.securityBadge.style.display = 'none';
+    }
+  }
+
+  function setVal(id, num, animate) {
+    const el = document.getElementById(id);
+    el.textContent = fmt.format(num);
+    if (animate) {
+      el.classList.remove('pulse');
+      void el.offsetWidth;
+      el.classList.add('pulse');
+    }
+  }
+
+  Object.values(els).forEach(el => {
+    if (el && (el.tagName === 'INPUT' || el.tagName === 'SELECT')) {
+      el.addEventListener('input', recalc);
+      el.addEventListener('change', recalc);
+    }
+  });
+
+  recalc();
+</script>
+
+</body>
+</html>

@@ -15,6 +15,8 @@
     --gold-dark: #e0a32f;
     --excel: #2bb673;
     --excel-dark: #21955c;
+    --automate: #2563eb;
+    --automate-dark: #1d4ed8;
     --red-soft: #ff6b6b;
     --bg: #f6f8fc;
     --card: #ffffff;
@@ -148,12 +150,17 @@
   }
 
   .cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
   }
-  @media (max-width: 800px) {
-    .cards { grid-template-columns: 1fr; }
+  .cards > a {
+    flex: 0 1 calc(33.333% - 16px);
+    min-width: 280px;
+  }
+  @media (max-width: 1000px) {
+    .cards > a { flex: 0 1 100%; }
   }
 
   .card {
@@ -176,6 +183,7 @@
   }
   .card.excel::before { background: linear-gradient(90deg, var(--excel), var(--excel-dark)); }
   .card.powerbi::before { background: linear-gradient(90deg, var(--gold), var(--gold-dark)); }
+  .card.automate::before { background: linear-gradient(90deg, var(--automate), var(--automate-dark)); }
 
   .card:hover {
     transform: translateY(-4px);
@@ -214,6 +222,7 @@
   }
   .card.excel .card-title-block .tool { color: var(--excel-dark); }
   .card.powerbi .card-title-block .tool { color: var(--gold-dark); }
+  .card.automate .card-title-block .tool { color: var(--automate-dark); }
 
   .card-title-block h2 {
     font-size: 22px;
@@ -255,6 +264,7 @@
   }
   .card.excel ul li::before { background: var(--excel); }
   .card.powerbi ul li::before { background: var(--gold-dark); }
+  .card.automate ul li::before { background: var(--automate); }
 
   .card-cta {
     display: flex;
@@ -286,6 +296,15 @@
   .card.powerbi .card-cta:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 30px rgba(245,185,69,0.5);
+  }
+  .card.automate .card-cta {
+    background: linear-gradient(135deg, var(--automate) 0%, var(--automate-dark) 100%);
+    color: #fff;
+    box-shadow: 0 8px 22px rgba(37,99,235,0.32);
+  }
+  .card.automate .card-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(37,99,235,0.45);
   }
   .card-cta .arrow {
     margin-left: 8px;
@@ -376,8 +395,9 @@
     <span class="badge">Calculateurs de performance</span>
     <h1>Combien votre entreprise <span class="accent">perd-elle vraiment</span> à cause de ses outils mal utilisés ?</h1>
     <p class="lead">
-      Deux calculateurs gratuits pour mettre un chiffre concret sur le coût caché d'une mauvaise utilisation d'Excel
-      et sur les décisions prises sans données fiables. Ajustez les paramètres à votre réalité — les résultats parlent d'eux-mêmes.
+      Cinq calculateurs gratuits pour mettre un chiffre concret sur le coût caché d'une mauvaise utilisation d'Excel,
+      sur les décisions prises sans données fiables, et sur les processus manuels qui pourraient être automatisés
+      avec Power Automate. Ajustez les paramètres à votre réalité — les résultats parlent d'eux-mêmes.
     </p>
   </div>
 </header>
@@ -430,6 +450,75 @@
       </ul>
 
       <span class="card-cta">Calculer mon coût Power BI <span class="arrow">→</span></span>
+    </a>
+
+    <a class="card automate" href="power-automate-licences.html" style="text-decoration:none; color:inherit;">
+      <div class="card-header">
+        <div class="card-logo">
+          <img src="power-automate-logo.svg" alt="Power Automate">
+        </div>
+        <div class="card-title-block">
+          <div class="tool">Power Automate — Sécurité</div>
+          <h2>Le coût des licences fantômes après un départ</h2>
+        </div>
+      </div>
+
+      <p class="pitch">Le département TI n'est pas toujours informé d'un départ. Résultat : licences M365, CRM et autres SaaS continuent d'être facturées des mois plus tard, pour des gens qui ne sont plus là.</p>
+
+      <ul>
+        <li>Licences SaaS payées dans le vide après chaque départ</li>
+        <li>Accès orphelins qui restent ouverts pendant des mois</li>
+        <li>Risque de sécurité réduit grâce à la fermeture automatique</li>
+        <li>SIRH → Power Automate → fermeture immédiate au moment exact</li>
+      </ul>
+
+      <span class="card-cta">Calculer mon coût Licences <span class="arrow">→</span></span>
+    </a>
+
+    <a class="card automate" href="power-automate-taches.html" style="text-decoration:none; color:inherit;">
+      <div class="card-header">
+        <div class="card-logo">
+          <img src="power-automate-logo.svg" alt="Power Automate">
+        </div>
+        <div class="card-title-block">
+          <div class="tool">Power Automate — Productivité</div>
+          <h2>Le coût des tâches répétitives non automatisées</h2>
+        </div>
+      </div>
+
+      <p class="pitch">Copier-coller entre systèmes, classement de pièces jointes, transferts de fichiers, mises à jour de tableaux. Multipliez par toute l'équipe — c'est un poste à plein temps qui disparaît silencieusement.</p>
+
+      <ul>
+        <li>Heures perdues chaque semaine par personne</li>
+        <li>Effet multiplicateur sur toute l'équipe</li>
+        <li>Part automatisable par un flux Power Automate</li>
+        <li>Temps libéré pour les activités à plus forte valeur</li>
+      </ul>
+
+      <span class="card-cta">Calculer mon coût Tâches <span class="arrow">→</span></span>
+    </a>
+
+    <a class="card automate" href="power-automate-erreurs.html" style="text-decoration:none; color:inherit;">
+      <div class="card-header">
+        <div class="card-logo">
+          <img src="power-automate-logo.svg" alt="Power Automate">
+        </div>
+        <div class="card-title-block">
+          <div class="tool">Power Automate — Qualité</div>
+          <h2>Le coût des erreurs manuelles et rapports recompilés</h2>
+        </div>
+      </div>
+
+      <p class="pitch">Factures mal classées, courriels oubliés, rapports recompilés à la main chaque semaine. Un flux ne se trompe jamais et n'oublie rien — et il peut rafraîchir un modèle Power BI au passage.</p>
+
+      <ul>
+        <li>Erreurs de saisie, d'oubli et de destinataire évitées</li>
+        <li>Rapports auto-rafraîchis et distribués sans intervention</li>
+        <li>Tableaux Power BI à jour à chaque événement</li>
+        <li>Traçabilité complète des actions exécutées</li>
+      </ul>
+
+      <span class="card-cta">Calculer mon coût Erreurs <span class="arrow">→</span></span>
     </a>
 
   </div>
